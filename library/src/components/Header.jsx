@@ -7,7 +7,6 @@ const Header = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // ganti tab tanpa hapus input
     window.location.href = "/search";
   };
 

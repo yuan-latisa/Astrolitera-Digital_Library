@@ -1,14 +1,17 @@
 import React from "react";
-import Header from "./components/Header";
 import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <>
       <Header />
-      <main style={{ padding: "20px", textAlign: "center" }}>
-        <h2>Selamat Datang di Perpustakaan Digital AstroLitera</h2>
+      <main className="main-content">
+        <h1>Selamat Datang di Perpustakaan Digital AstroLitera</h1>
       </main>
+      <Footer /> 
+      {}
     </>
   );
 }

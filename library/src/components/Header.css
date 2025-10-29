@@ -32,12 +32,11 @@
   font-weight: 700;
 }
 
-/* kanan */
 .header-right {
   display: flex;
   align-items: center;
-  gap: 25px; /* jarak antara search dan menu */
-  margin-right: 25px; /* biar gak mepet ke tepi kanan */
+  gap: 25px;
+  margin-right: 25px;
 }
 
 .search-bar {
@@ -48,7 +47,7 @@
   padding: 6px 14px;
   width: 260px;
   box-sizing: border-box;
-  margin-right: 10px; /* jarak tambahan dari menu icon */
+  margin-right: 10px;
 }
 
 .search-icon {
@@ -73,7 +72,6 @@
   color: white;
 }
 
-/* biar konten gak ketiban */
 main {
   margin-top: 70px;
 }
