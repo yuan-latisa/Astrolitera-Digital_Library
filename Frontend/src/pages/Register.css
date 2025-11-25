@@ -1,0 +1,138 @@
+.reg-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+
+/* BAGIAN KIRI */
+.reg-left {
+  flex: 1.4;
+  padding: 40px 60px;
+  position: relative;
+}
+
+.reg-back {
+  background: #1b2b44;
+  width: 55px;
+  height: 55px;
+  border-radius: 0 0 55px 0;
+  color: white;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.reg-title {
+  margin-top: 15px;
+  font-size: 36px;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #1b2b44;
+}
+
+.reg-form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.reg-form label {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.reg-form input {
+  border: 2px solid #e0b300;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 5px;
+  outline: none;
+}
+
+/* UPLOAD */
+.upload-box {
+  border: 2px solid #e0b300;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.upload-box input {
+  width: 100%;
+}
+
+.upload-icon {
+  font-size: 22px;
+  color: #e0b300;
+  position: absolute;
+  right: 15px;
+}
+
+/* BUTTON */
+.reg-submit {
+  margin-top: 25px;
+  background: #1b2b44;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  width: 130px;
+  font-size: 16px;
+}
+
+/* LINK */
+.reg-links {
+  margin-top: 30px;
+  font-size: 13px;
+}
+
+.as-guest {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-text .login-link {
+  color: blue;
+  cursor: pointer;
+}
+
+/* BAGIAN KANAN */
+.reg-right {
+  flex: 1;
+  background: #1b2b44;
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 5% 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+}
+
+.vertical-text {
+  position: absolute;
+  right: 25px;
+  top: 20%;
+  writing-mode: vertical-rl;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.book-image {
+  width: 270px;
+  margin-top: 50px;
+}
+
+.brand-text {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
