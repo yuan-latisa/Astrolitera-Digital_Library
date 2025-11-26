@@ -1,8 +1,24 @@
+/* RESET FULLSCREEN FIX */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* supaya tidak ada scrollbar horizontal */
+  background: white;
+}
+
 .reg-container {
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: white;
+  overflow: hidden; /* hilangkan potongan pinggir */
 }
 
 /* BAGIAN KIRI */
@@ -23,6 +39,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: absolute;   /* ⬅ tempel di pojok */
+  top: 0;
+  left: 0;
+  z-index: 10;          /* ⬅ biar gak ketutup */
 }
 
 .reg-title {
@@ -54,25 +74,62 @@
   outline: none;
 }
 
-/* UPLOAD */
+/* ================== UPLOAD FOTO FINAL ================== */
+
 .upload-box {
   border: 2px solid #e0b300;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 10px 15px;
+  height: 48px;
+
   display: flex;
   align-items: center;
+  cursor: pointer;
+
   position: relative;
+  overflow: hidden;
 }
 
-.upload-box input {
-  width: 100%;
-}
-
-.upload-icon {
-  font-size: 22px;
-  color: #e0b300;
+.hidden-file-input {
   position: absolute;
-  right: 15px;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-placeholder {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-info {
+  width: 100%;
+  padding-right: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 85%;
+}
+
+.clear-file-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
 }
 
 /* BUTTON */

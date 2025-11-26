@@ -23,6 +23,7 @@ function Register() {
 
   function handleFileChange(e) {
     const file = e.target.files?.[0];
+
     if (!file) {
       setKartu(null);
       return;
@@ -41,13 +42,17 @@ function Register() {
 
   function handleClearFile(e) {
     e.stopPropagation();
+    e.preventDefault();
     setKartu(null);
+
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   }
 
-  function handleUploadClick() {
+  function handleUploadClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -61,11 +66,11 @@ function Register() {
     formData.append("nama", form.nama);
     formData.append("kelas", form.kelas);
     formData.append("password", form.password);
+
     if (kartu) {
       formData.append("kartu", kartu);
     }
 
-    // handle POST /register
     fetch("http://localhost:5000/register", {
       method: "POST",
       body: formData,
@@ -80,7 +85,10 @@ function Register() {
 
   return (
     <div className="reg-container">
+
+      {/* ================== BAGIAN KIRI ================== */}
       <div className="reg-left">
+
         <div className="reg-back" onClick={() => navigate(-1)}>
           ←
         </div>
@@ -88,6 +96,7 @@ function Register() {
         <h1 className="reg-title">Daftar</h1>
 
         <form onSubmit={handleSubmit} className="reg-form">
+
           <label>NIS :</label>
           <input
             type="text"
@@ -112,36 +121,43 @@ function Register() {
             onChange={handleChange}
           />
 
+          {/* ================== UPLOAD FOTO FINAL ================== */}
           <label>Kartu Perpustakaan:</label>
+
           <div className="upload-box" onClick={handleUploadClick}>
             <input
               ref={fileInputRef}
               type="file"
               accept="image/jpeg,image/png,image/jpg"
               className="hidden-file-input"
+              onClick={(e) => e.stopPropagation()}  // <=== FIX DOUBLE POPUP
               onChange={handleFileChange}
             />
 
             {!kartu && (
               <div className="upload-placeholder">
-                <Camera size={22} color="#e0b300" />
+                <Camera size={24} color="#e0b300" />
               </div>
             )}
 
             {kartu && (
-              <div className="file-info">
-                <span className="file-name">{kartu.name}</span>
+              <>
+                <div className="file-info">
+                  <span className="file-name">{kartu.name}</span>
+                </div>
+
                 <button
                   type="button"
                   className="clear-file-btn"
                   onClick={handleClearFile}
                 >
-                  <X size={18} />
+                  <X size={20} color="#c62828" />
                 </button>
-              </div>
+              </>
             )}
           </div>
 
+          {/* ================== PASSWORD ================== */}
           <label>Kata Sandi :</label>
           <input
             type="password"
@@ -168,11 +184,13 @@ function Register() {
         </div>
       </div>
 
+      {/* ================== BAGIAN KANAN ================== */}
       <div className="reg-right">
         <div className="vertical-text">WELCOME</div>
         <img src={bookImg} alt="Books" className="book-image" />
         <p className="brand-text">ASTROLITERA DIGITAL LIBRARY</p>
       </div>
+
     </div>
   );
 }
