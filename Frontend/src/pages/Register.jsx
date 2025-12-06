@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./Register.css";
 import { Camera, X } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +14,8 @@ function Register() {
     kelas: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [kartu, setKartu] = useState(null);
   const fileInputRef = useRef(null);
@@ -44,18 +47,12 @@ function Register() {
     e.stopPropagation();
     e.preventDefault();
     setKartu(null);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
   function handleUploadClick(e) {
     e.stopPropagation();
-    e.preventDefault();
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    if (fileInputRef.current) fileInputRef.current.click();
   }
 
   function handleSubmit(e) {
@@ -67,9 +64,7 @@ function Register() {
     formData.append("kelas", form.kelas);
     formData.append("password", form.password);
 
-    if (kartu) {
-      formData.append("kartu", kartu);
-    }
+    if (kartu) formData.append("kartu", kartu);
 
     fetch("http://localhost:5000/register", {
       method: "POST",
@@ -86,51 +81,29 @@ function Register() {
   return (
     <div className="reg-container">
 
-      {/* ================== BAGIAN KIRI ================== */}
       <div className="reg-left">
-
-        <div className="reg-back" onClick={() => navigate(-1)}>
-          ←
-        </div>
+        <div className="reg-back" onClick={() => navigate(-1)}>←</div>
 
         <h1 className="reg-title">Daftar</h1>
 
         <form onSubmit={handleSubmit} className="reg-form">
-
           <label>NIS :</label>
-          <input
-            type="text"
-            name="nis"
-            value={form.nis}
-            onChange={handleChange}
-          />
+          <input type="text" name="nis" value={form.nis} onChange={handleChange} />
 
           <label>Nama :</label>
-          <input
-            type="text"
-            name="nama"
-            value={form.nama}
-            onChange={handleChange}
-          />
+          <input type="text" name="nama" value={form.nama} onChange={handleChange} />
 
           <label>Kelas :</label>
-          <input
-            type="text"
-            name="kelas"
-            value={form.kelas}
-            onChange={handleChange}
-          />
+          <input type="text" name="kelas" value={form.kelas} onChange={handleChange} />
 
-          {/* ================== UPLOAD FOTO FINAL ================== */}
           <label>Kartu Perpustakaan:</label>
-
-          <div className="upload-box" onClick={handleUploadClick}>
+          <div className={`upload-box ${kartu ? "disabled" : ""}`} onClick={handleUploadClick}>
             <input
               ref={fileInputRef}
               type="file"
               accept="image/jpeg,image/png,image/jpg"
               className="hidden-file-input"
-              onClick={(e) => e.stopPropagation()}  // <=== FIX DOUBLE POPUP
+              onClick={(e) => e.stopPropagation()}
               onChange={handleFileChange}
             />
 
@@ -145,7 +118,6 @@ function Register() {
                 <div className="file-info">
                   <span className="file-name">{kartu.name}</span>
                 </div>
-
                 <button
                   type="button"
                   className="clear-file-btn"
@@ -157,24 +129,27 @@ function Register() {
             )}
           </div>
 
-          {/* ================== PASSWORD ================== */}
           <label>Kata Sandi :</label>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-          />
+          <div className="password-wrapper">
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    value={form.password}
+    onChange={handleChange}
+  />
 
-          <button className="reg-submit" type="submit">
-            Daftar
-          </button>
+  <span
+    className="toggle-pass"
+    onClick={() => setShowPassword(!showPassword)}
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </span>
+</div>
+          <button className="reg-submit" type="submit">Daftar</button>
         </form>
 
         <div className="reg-links">
-          <p className="as-guest" onClick={() => navigate("/home")}>
-            Lanjut Sebagai Tamu
-          </p>
+          <p className="as-guest" onClick={() => navigate("/home")}>Lanjut Sebagai Tamu</p>
           <p className="login-text">
             Sudah Punya Akun?{" "}
             <span onClick={() => navigate("/login")} className="login-link">
@@ -184,11 +159,11 @@ function Register() {
         </div>
       </div>
 
-      {/* ================== BAGIAN KANAN ================== */}
+      <img src={bookImg} alt="Books" className="book-image" />
+
       <div className="reg-right">
         <div className="vertical-text">WELCOME</div>
-        <img src={bookImg} alt="Books" className="book-image" />
-        <p className="brand-text">ASTROLITERA DIGITAL LIBRARY</p>
+        <p className="brand-text">ASTROLITERA<br />DIGITAL LIBRARY</p>
       </div>
 
     </div>
