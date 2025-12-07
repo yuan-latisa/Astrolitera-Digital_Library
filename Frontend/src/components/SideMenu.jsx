@@ -37,7 +37,12 @@ function SideMenu({ open, onClose }) {
                 </ul>
 
                 <div className="bottom-area">
-                    <button className="login-btn" onClick={() => navigate("/login")}>
+                    <button 
+                        className="login-btn"
+                        onClick={() => {
+                            onClose();
+                            navigate("/login");
+                        }}>
                         Masuk
                     </button>
                 </div>
