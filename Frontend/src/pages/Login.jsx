@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Register.css"; // tetap pakai CSS yang sama
+import "./Login.css";
 import { Eye, EyeOff } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ function Login() {
       .then((data) => {
         if (data.success) {
           alert("Berhasil Masuk!");
-          navigate("/home");
+          navigate("./HomePage.jsx");
         } else {
           alert(data.message || "Login gagal");
         }

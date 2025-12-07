@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/HomePage";
+import Tentang from "./pages/Tentang";
+import Kontak from "./pages/Kontak";
+import Kebijakan from "./pages/Kebijakan";
 
 function App() {
   return (
@@ -9,15 +12,20 @@ function App() {
       <Routes>
 
         {/* halaman awal */}
-        <Route path="/" element={<Register />} />
+        <Route path="/" element={<Home />} />
 
         {/* halaman lain */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
 
-        {/* Fallback untuk semua URL yang tidak ada */}
-        <Route path="*" element={<Register />} />
+        {/* footer pages */}
+        <Route path="/tentang" element={<Tentang />} />
+        <Route path="/kontak" element={<Kontak />} />
+        <Route path="/kebijakan" element={<Kebijakan />} />
+
+        {/* Fallback */}
+        <Route path="*" element={<Home />} />
 
       </Routes>
     </BrowserRouter>

@@ -73,7 +73,7 @@ function Register() {
       .then((res) => res.json())
       .then(() => {
         alert("Pendaftaran berhasil!");
-        navigate("/login");
+        navigate("./HomePage.jsx");
       })
       .catch((err) => console.error(err));
   }
@@ -149,10 +149,10 @@ function Register() {
         </form>
 
         <div className="reg-links">
-          <p className="as-guest" onClick={() => navigate("/home")}>Lanjut Sebagai Tamu</p>
+          <p className="as-guest" onClick={() => navigate("./HomePage.jsx")}>Lanjut Sebagai Tamu</p>
           <p className="login-text">
             Sudah Punya Akun?{" "}
-            <span onClick={() => navigate("/login")} className="login-link">
+            <span onClick={() => navigate("./Login.jsx")} className="login-link">
               Masuk Di Sini
             </span>
           </p>
