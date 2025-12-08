@@ -111,7 +111,6 @@ body {
   background: #dcdcdc;
   margin: auto;
   border-radius: 10px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,11 +123,11 @@ body {
   background: #141b2d;
   color: white;
   padding: 25px 40px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-top: 100px;
 }
 
 .footer-top {

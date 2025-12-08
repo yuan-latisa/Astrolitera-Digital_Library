@@ -1,4 +1,3 @@
-/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -9,20 +8,16 @@
   z-index: 9000;
 }
 
-/* Drawer menu */
 .side-menu {
   position: fixed;
   top: 0;
   left: -300px;
   width: 270px;
   height: 100vh;
-
   background: #0D1321;
   color: white;
-
   transition: 0.28s ease;
   z-index: 9999;
-
   display: flex;
   flex-direction: column;
 }
@@ -31,7 +26,6 @@
   left: 0;
 }
 
-/* HEADER */
 .side-header {
   background: #141B2D;
   padding: 22px 20px 60px 20px;   /* <— lihat angka 40px, ini kuncinya */
@@ -51,7 +45,6 @@
   font-weight: 500;
 }
 
-/* MENU ITEMS */
 .menu-items {
   list-style: none;
   padding: 25px 25px;
@@ -62,10 +55,8 @@
   display: flex;
   align-items: center;
   gap: 15px;
-
   padding: 15px 0;
   cursor: pointer;
-
   font-size: 16px;
   font-weight: 600;
 }
@@ -83,13 +74,11 @@
   text-decoration: none;
 }
 
-/* AREA PALING BAWAH */
 .bottom-area {
   margin-top: auto;
   padding: 0 20px 30px 20px;
 }
 
-/* BUTTON */
 .login-btn {
   width: 100%;
   padding: 14px 0;
