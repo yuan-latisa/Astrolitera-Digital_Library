@@ -9,6 +9,7 @@ import Favorit from "./pages/Favorit";
 import Pengaturan from "./pages/Pengaturan";
 import DetailBuku from "./pages/DetailBuku";
 import KategoriPage from "./pages/KategoriPage";
+import HalamanBaca from "./pages/HalamanBaca";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
 
         <Route path="/book/:id" element={<DetailBuku />} />
         <Route path="/kategori/:nama" element={<KategoriPage />} />
+        <Route path="/baca" element={<HalamanBaca />} />
 
         {/* fallback */}
         <Route path="*" element={<Home />} />

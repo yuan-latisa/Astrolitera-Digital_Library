@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./DetailBuku.css";
-import { ArrowLeft, Star, Bookmark } from "lucide-react";
+import { ArrowLeft, Star, Bookmark, BookOpen, Info, MessageSquare, } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import examplecover from "../assets/examplecover.jpg";
+import examplecover from "../assets/cover1.jpg";
 
 function DetailBuku() {
   const navigate = useNavigate();
@@ -17,11 +17,11 @@ function DetailBuku() {
     status: "Tersedia",
     genre: ["Novel", "Slice of Life", "Drama"],
     sinopsis:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt...",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...",
     info: {
       bahasa: "Indonesia",
       penerbit: "Gramedia",
-      halaman: "350 Halaman",
+      halaman: "350 halaman",
       tanggal: "2020",
       penulis: "Tere Liye",
       format: "Hardcover",
@@ -32,21 +32,15 @@ function DetailBuku() {
 
   return (
     <div className="detail-container">
-
-      <div className="detail-header">
-        <ArrowLeft className="back-btn" onClick={() => navigate(-1)} />
-      </div>
-
+      <ArrowLeft className="back-btn" onClick={() => navigate(-1)} />
       <div className="detail-top">
-
-        <img src={book.cover} alt={book.title} className="detail-cover" />
-
+        <img src={book.cover} className="detail-cover" alt={book.title} />
         <div className="detail-info">
           <h2>{book.title}</h2>
           <p className="detail-author">{book.author}</p>
 
           <div className="detail-rating">
-            <Star size={16} fill="#f5c518" color="#f5c518" />
+            <Star size={18} fill="#f5c518" color="#f5c518" />
             <span>{book.rating}/5</span>
           </div>
 
@@ -54,45 +48,88 @@ function DetailBuku() {
 
           <div className="genre-row">
             {book.genre.map((g, i) => (
-              <span key={i} className="genre">{g}</span>
+              <span className="genre" key={i}>
+                {g}
+              </span>
             ))}
           </div>
 
-          <Bookmark size={28} className="bookmark-btn" />
+          <Bookmark size={32} className="bookmark-btn" />
         </div>
-
       </div>
 
       <div className="tabs">
-        <button className={tab === "sinopsis" ? "active" : ""} onClick={() => setTab("sinopsis")}>Sinopsis</button>
-        <button className={tab === "info" ? "active" : ""} onClick={() => setTab("info")}>Informasi Buku</button>
-        <button className={tab === "ulasan" ? "active" : ""} onClick={() => setTab("ulasan")}>Ulasan</button>
+        <button
+          className={`tab-btn ${tab === "sinopsis" ? "active" : ""}`}
+          onClick={() => setTab("sinopsis")}
+        >
+          <BookOpen size={18} />
+          <span>Sinopsis</span>
+        </button>
+
+        <button
+          className={`tab-btn ${tab === "info" ? "active" : ""}`}
+          onClick={() => setTab("info")}
+        >
+          <Info size={18} />
+          <span>Informasi Buku</span>
+        </button>
+
+        <button
+          className={`tab-btn ${tab === "ulasan" ? "active" : ""}`}
+          onClick={() => setTab("ulasan")}
+        >
+          <MessageSquare size={18} />
+          <span>Ulasan</span>
+        </button>
       </div>
 
       <div className="content-box">
-
         {tab === "sinopsis" && (
           <p className="sinopsis">{book.sinopsis}</p>
         )}
 
         {tab === "info" && (
           <div className="info-grid">
-            <div><strong>Bahasa</strong><br />{book.info.bahasa}</div>
-            <div><strong>Tanggal Rilis</strong><br />{book.info.tanggal}</div>
-            <div><strong>Penerbit</strong><br />{book.info.penerbit}</div>
-            <div><strong>Penulis</strong><br />{book.info.penulis}</div>
-            <div><strong>Halaman</strong><br />{book.info.halaman}</div>
-            <div><strong>Format</strong><br />{book.info.format}</div>
+            <div>
+              <strong>Bahasa</strong>
+              <br />
+              {book.info.bahasa}
+            </div>
+            <div>
+              <strong>Tanggal Rilis</strong>
+              <br />
+              {book.info.tanggal}
+            </div>
+            <div>
+              <strong>Penerbit</strong>
+              <br />
+              {book.info.penerbit}
+            </div>
+            <div>
+              <strong>Penulis</strong>
+              <br />
+              {book.info.penulis}
+            </div>
+            <div>
+              <strong>Jumlah Halaman</strong>
+              <br />
+              {book.info.halaman}
+            </div>
+            <div>
+              <strong>Format</strong>
+              <br />
+              {book.info.format}
+            </div>
           </div>
         )}
 
         {tab === "ulasan" && (
-          <p className="sinopsis">Belum ada ulasan...</p>
+          <p className="sinopsis">Belum ada ulasan…</p>
         )}
 
-        <button className="read-btn">Baca Sekarang</button>
+        <button className="read-btn" onClick={() => navigate("/baca")}> Baca Sekarang </button>
       </div>
-
     </div>
   );
 }

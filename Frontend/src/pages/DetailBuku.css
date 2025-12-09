@@ -1,19 +1,15 @@
 .detail-container {
-  max-width: 1500px;
-  margin: auto;
-  padding: 20px 25px;
+  padding: 0px 40px;
   font-family: Arial, sans-serif;
-}
-
-.detail-header {
-  margin-bottom: 20px;
 }
 
 .back-btn {
   cursor: pointer;
+  margin-bottom: 35px;
+  margin-top: 10px;
+  margin-left: -10px;
 }
 
-/* BAGIAN ATAS: COVER + INFO */
 .detail-top {
   display: flex;
   gap: 40px;
@@ -21,125 +17,148 @@
 }
 
 .detail-cover {
-  width: 260px;
-  height: auto;
-  border-radius: 8px;
+  width: 350px;
+  border-radius: 10px;
+  position: relative;
+  margin-left: 100px;
+  z-index: 2;    
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);      
 }
 
-/* INFO KANAN */
 .detail-info {
   flex: 1;
   position: relative;
 }
 
 .detail-info h2 {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: bold;
-  margin-bottom: 4px;
 }
 
 .detail-author {
   font-size: 14px;
-  opacity: 0.75;
-  margin-bottom: 8px;
+  opacity: 0.7;
 }
 
 .detail-rating {
   display: flex;
-  gap: 5px;
   align-items: center;
-  font-size: 15px;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin: 10px 0;
+  font-weight: bold;
 }
 
 .status {
-  background: #d6f5d6;
-  color: #2d7a2d;
-  padding: 4px 12px;
+  background: #d5f5d5;
+  color: #2e7b2e;
+  padding: 5px 14px;
   border-radius: 12px;
   font-size: 12px;
-  margin-bottom: 12px;
-  display: inline-block;
 }
 
 .genre-row {
   display: flex;
   gap: 10px;
-  margin-bottom: 12px;
+  margin: 12px 0;
 }
 
 .genre {
-  font-size: 12px;
   background: #eee;
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: 12px;
+  font-size: 12px;
+  transition: 0.2s;
 }
+
 .genre:hover {
   background: #dcdcdc;
   cursor: pointer;
 }
 
-/* BOOKMARK */
 .bookmark-btn {
   position: absolute;
-  top: 0;
   right: 0;
+  top: 5px;
   cursor: pointer;
 }
 
-/* TABS */
 .tabs {
   display: flex;
   gap: 12px;
-  margin-top: 20px;
+  margin: -200px 490px 80px;
+  position: relative;
+  z-index: 1;
 }
 
-.tabs button {
-  padding: 8px 16px;
-  border-radius: 8px;
+.tab-btn {
+  padding: 10px 30px;
+  border-radius: 12px;
+  border: 2px solid #ddd;
   background: white;
-  border: 1px solid #ccc;
+  display: flex;
+  gap: 5px;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 600;
+  transition: 0.2s;
+  color: #222;
+  position: relative;
+  margin-top: -140px;
+  margin-left: 20px;
+  z-index: 3;
 }
 
-.tabs button.active {
+.tab-btn svg {
+  color: #555;
+}
+
+.tab-btn.active {
   background: #f1c232;
   border-color: #f1c232;
+  color: #ffffff;
 }
 
-/* BLUE CONTENT BOX */
+.tab-btn.active svg {
+  color: #ffffff;
+}
+
+.tab-btn:hover {
+  opacity: 0.9;
+}
+
 .content-box {
   background: #162b45;
-  padding: 20px;
   color: white;
+  width: 80%;
+  padding: 60px;
+  margin-left: 310px;
+  margin-top: -170px;
+  min-height: 389px;
   position: relative;
-  min-height: 1200px;
+  z-index: 1;
+  
 }
 
 .sinopsis {
-  width: 90%;
+  width: 60%;
+  margin-left: 150px;
   line-height: 1.5;
   font-size: 15px;
 }
 
-/* GRID INFO */
 .info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 18px;
   font-size: 14px;
-  line-height: 1.4;
 }
 
-/* BUTTON BACA */
 .read-btn {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
+  right: 50px;
+  bottom: 40px;
+  padding: 20px 42px;
   background: #d7a220;
   border: none;
-  padding: 10px 20px;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
