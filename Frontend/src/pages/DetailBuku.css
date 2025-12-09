@@ -1,0 +1,146 @@
+.detail-container {
+  max-width: 1500px;
+  margin: auto;
+  padding: 20px 25px;
+  font-family: Arial, sans-serif;
+}
+
+.detail-header {
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  cursor: pointer;
+}
+
+/* BAGIAN ATAS: COVER + INFO */
+.detail-top {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.detail-cover {
+  width: 260px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* INFO KANAN */
+.detail-info {
+  flex: 1;
+  position: relative;
+}
+
+.detail-info h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.detail-author {
+  font-size: 14px;
+  opacity: 0.75;
+  margin-bottom: 8px;
+}
+
+.detail-rating {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.status {
+  background: #d6f5d6;
+  color: #2d7a2d;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.genre-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.genre {
+  font-size: 12px;
+  background: #eee;
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+.genre:hover {
+  background: #dcdcdc;
+  cursor: pointer;
+}
+
+/* BOOKMARK */
+.bookmark-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.tabs button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabs button.active {
+  background: #f1c232;
+  border-color: #f1c232;
+}
+
+/* BLUE CONTENT BOX */
+.content-box {
+  background: #162b45;
+  padding: 20px;
+  color: white;
+  position: relative;
+  min-height: 1200px;
+}
+
+.sinopsis {
+  width: 90%;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+/* GRID INFO */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* BUTTON BACA */
+.read-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: #d7a220;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
