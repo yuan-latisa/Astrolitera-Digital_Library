@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 import SideMenu from "../components/SideMenu";
 import BookRow from "../components/BookRow";
 import examplecover from "../assets/examplecover.jpg";
-import cover1 from "../assets/cover1.jpg";
+import cover2 from "../assets/cover2.png";
 
 // DUMMY BUKU
 const dummyBooks = [
-  { cover: cover1, title: "MEOW", author: "Sam Austen", rating: 4.0 },
+  { cover: cover2, title: "Hell Screen", author: "Ryūnosuke", rating: 4.2 },
   { cover: examplecover, title: "Pergi", author: "Tere Liye", rating: 4.5 },
   { cover: examplecover, title: "Pergi", author: "Tere Liye", rating: 4.5 },
   { cover: examplecover, title: "Pergi", author: "Tere Liye", rating: 4.5 },
@@ -23,8 +23,18 @@ const dummyBooks = [
 
 ];
 
+import { useNavigate } from "react-router-dom";
+
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && search.trim() !== "") {
+      navigate(`/search?query=${encodeURIComponent(search)}`);
+    }
+  };
 
   return (
     <div className="page-wrapper">
@@ -41,8 +51,15 @@ function HomePage() {
         <div className="header-right">
           <div className="search-box">
             <Search size={18} className="search-icon" />
-            <input type="text" placeholder="Cari Buku..." />
+            <input
+              type="text"
+              placeholder="Cari Buku..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
           </div>
+
 
           <Menu
             size={30}

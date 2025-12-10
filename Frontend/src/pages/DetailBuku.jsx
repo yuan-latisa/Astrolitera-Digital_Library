@@ -20,7 +20,7 @@ function DetailBuku() {
     title: "Hell Screen",
     author: "Ryūnosuke Akutagawa",
     cover: cover2,
-    rating: 4.5,
+    rating: 4.2,
     status: "Tidak Tersedia",
     genre: ["Fiksi Horror", "Cerita Pendek", "Klasik Jepang"],
     sinopsis:
@@ -153,10 +153,32 @@ function DetailBuku() {
   };
 
   // ================================
+  // 🟨 BOOKMARK STATE + NOTIFIKASI
+  // ================================
+  const [bookmarked, setBookmarked] = useState(false);
+  const [toast, setToast] = useState(null);
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 1700); // notif hilang otomatis
+  };
+
+  const toggleBookmark = () => {
+    const newState = !bookmarked;
+    setBookmarked(newState);
+
+    showToast(
+      newState
+        ? "Ditambahkan ke Bookmark"
+        : "Dihapus dari Bookmark"
+    );
+  };
+  // ================================
   // 🟦 RENDER
   // ================================
   return (
     <div className="detail-container">
+      { toast && <div className="toast-notif">{toast}</div> }
       <ArrowLeft className="back-btn" onClick={() => navigate(-1)} />
 
       {/* BAGIAN ATAS */}
@@ -180,7 +202,15 @@ function DetailBuku() {
             ))}
           </div>
 
-          <Bookmark size={32} className="bookmark-btn" />
+          <Bookmark
+            size={32}
+            className="bookmark-btn"
+            onClick={toggleBookmark}
+            fill={bookmarked ? "#f1c232" : "none"}   // warna kuning kalau aktif
+            color={bookmarked ? "#f1c232" : "#414141ff"}
+            style={{ cursor: "pointer" }}
+          />
+
         </div>
       </div>
 
@@ -209,7 +239,7 @@ function DetailBuku() {
       </div>
 
       {/* CONTENT BOX */}
-      <div className="content-box">
+      <div className={`content-box ${tab === "ulasan" ? "ulasan-mode" : "normal-mode"}`}>
 
         {/* ======================= */}
         {/* SINOPSIS */}

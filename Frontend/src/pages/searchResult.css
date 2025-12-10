@@ -1,0 +1,123 @@
+/* =============================== */
+/* Search Result Page - Final UI   */
+/* =============================== */
+
+.search-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f6fa;
+  padding: 15px 20px 40px;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+.search-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #141b2d;
+  padding: 12px 18px;
+  color: white;
+  border-radius: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.back-btn {
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.search-input-box {
+  flex: 1;
+  background: white;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #222;
+}
+
+.search-input-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 15px;
+}
+
+/* GRID RESULTS */
+.results-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 18px;
+  padding: 20px 0;
+}
+
+/* CARD */
+.book-card-result {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.book-card-result:hover {
+  transform: translateY(-3px);
+}
+
+.book-card-result img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* TITLE + AUTHOR */
+.book-card-result h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin: 8px 0 4px;
+}
+
+.author {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+/* RATING ROW */
+.rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.rating-row span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bookmark-icon {
+  cursor: pointer;
+  color: #777;
+  transition: 0.2s;
+}
+
+.bookmark-icon:hover {
+  color: #ffc727;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .results-container {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}

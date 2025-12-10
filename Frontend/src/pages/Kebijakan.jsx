@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function Kebijakan() {
@@ -9,22 +9,37 @@ function Kebijakan() {
   return (
     <div className="page-container">
 
-      {/* HEADER */}
       <header className="page-header">
         <ArrowLeft className="back-icon" onClick={() => navigate("/home")} />
-        <h1>Kebijakan</h1>
+        <h1>Kebijakan Penggunaan</h1>
       </header>
 
-      {/* CONTENT */}
-      <div className="page-content">
-        <p>
-          Pengguna platform AstroLitera diharapkan dapat mematuhi aturan yang
-          berlaku, menjaga etika penggunaan, serta memanfaatkan layanan ini
-          dengan bijak. Buku-buku digital yang tersedia hanya boleh digunakan
-          untuk keperluan belajar dan tidak boleh disebarkan tanpa izin.
-        </p>
-      </div>
+      <div className="page-content fancy-card">
 
+        <div className="section">
+          <ShieldCheck size={40} className="section-icon" />
+          <h2>Kebijakan & Aturan</h2>
+          <p>
+            Pengguna AstroLitera diwajibkan menggunakan platform ini secara bertanggung jawab.
+            Seluruh buku digital yang tersedia hanya diperbolehkan untuk keperluan pembelajaran,
+            penelitian, dan referensi.
+          </p>
+        </div>
+
+        <div className="divider"></div>
+
+        <h3>Ketentuan Penggunaan:</h3>
+        <ul className="policy-list">
+          <li>Dilarang menyebarkan ulang buku tanpa izin.</li>
+          <li>Dilarang menyalahgunakan fitur atau merusak sistem.</li>
+          <li>Pengguna wajib menjaga etika dan sopan santun.</li>
+        </ul>
+
+        <p className="policy-footer">
+          Dengan menggunakan AstroLitera, Anda setuju untuk mematuhi seluruh kebijakan yang berlaku.
+        </p>
+
+      </div>
     </div>
   );
 }

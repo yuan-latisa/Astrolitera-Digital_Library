@@ -1,13 +1,16 @@
 .detail-container {
-  padding: 0px 40px;
+  padding-top: 74px;
+  padding-left: 20px;
+  padding-right: 30px;
   font-family: Arial, sans-serif;
 }
 
 .back-btn {
-  cursor: pointer;
-  margin-bottom: 35px;
-  margin-top: 10px;
-  margin-left: -10px;
+    position: absolute;
+    top: 25px;       /* geser dari atas */
+    left: 25px;      /* geser dari kiri */
+    cursor: pointer;
+    z-index: 999;    /* biar selalu di atas elemen lain */
 }
 
 .detail-top {
@@ -129,16 +132,28 @@
 }
 
 .content-box {
-  background: #162b45;
-  color: white;
-  width: 80%;
-  padding: 44px;
-  margin-left: 310px;
-  margin-top: -208px;
-  min-height: 389px;
-  position: relative;
-  z-index: 1;
-  
+    background: #162b45;
+    color: white;
+    position: relative;
+    width: 80%;
+    margin-left: 307px;
+    border-radius: 0;
+    z-index: 1;
+}
+
+.normal-mode {
+    padding: 60px;
+    margin-top: -220px;    /* Sesuaikan biar pas */
+    min-height: 405px;     /* Tinggi gabungan sinopsis/info */
+}
+
+.ulasan-mode {
+    padding: 30px 50px 25px;
+    margin-top: -220px;    /* Turunin sedikit biar ulasan tidak kepotong */
+    min-height: 10px;     /* Tinggi lebih besar untuk daftar ulasan */
+    overflow-y: visible;   /* Biar tidak muncul scrollbar */
+    padding-top: px;
+    padding-bottom: 0px;
 }
 
 .sinopsis {
@@ -311,7 +326,7 @@
 /* === WRAPPER ULASAN (scroll smooth) === */
 /* AREA ULASAN */
 .ulasan-wrapper {
-  max-height: 305px;     /* tinggi kotak ulasan */
+  max-height: 375px;     /* tinggi kotak ulasan */
   overflow-y: auto;      /* scroll hanya vertikal */
   overflow-x: hidden;    /* HILANGKAN scroll horizontal */
   padding-right: 10px;   /* biar isi tidak ketutup scrollbar */
@@ -337,4 +352,29 @@
 
 .ulasan-wrapper::-webkit-scrollbar-thumb:hover {
   background: #aaa;
+}
+/* ============================== */
+/* 🔔 NOTIFIKASI BOOKMARK */
+/* ============================== */
+.toast-notif {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 24px;
+  background: rgba(20, 27, 45, 0.95);
+  color: white;
+  border-radius: 8px;
+  border-left: 4px solid #f1c232;
+  font-size: 14px;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+  animation: toastFade 2s ease forwards;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translate(-50%, -10px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
 }

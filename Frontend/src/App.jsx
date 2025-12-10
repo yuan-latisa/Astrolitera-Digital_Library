@@ -10,6 +10,7 @@ import Pengaturan from "./pages/Pengaturan";
 import DetailBuku from "./pages/DetailBuku";
 import KategoriPage from "./pages/KategoriPage";
 import HalamanBaca from "./pages/HalamanBaca";
+import SearchResult from "./pages/searchResult";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
         {/* halaman dari sidebar */}
         <Route path="/favorit" element={<Favorit />} />
         <Route path="/pengaturan" element={<Pengaturan />} />
+
+        <Route path="/search" element={<SearchResult />} />
 
         <Route path="/book/:id" element={<DetailBuku />} />
         <Route path="/kategori/:nama" element={<KategoriPage />} />
