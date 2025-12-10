@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./DetailBuku.css";
 import {
   ArrowLeft,
@@ -8,38 +8,50 @@ import {
   Info,
   MessageSquare,
   ThumbsUp,
+  Trash2,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import cover2 from "../assets/cover2.png";
 
 function DetailBuku() {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const book = {
     title: "Hell Screen",
     author: "Ryūnosuke Akutagawa",
     cover: cover2,
     rating: 4.5,
-    status: "Tersedia",
-    genre: ["Novel", "Slice of Life", "Drama"],
+    status: "Tidak Tersedia",
+    genre: ["Fiksi Horror", "Cerita Pendek", "Klasik Jepang"],
     sinopsis:
-      "Akutagawa's deceptively simple tale of Yoshihide, 'The Greatest Painter in Japan.' Hired by the Grand Lord to put the underworld on canvas, the single-minded painter fulfills his commission with startling results.",
+      "Akutagawa's deceptively simple tale of Yoshihide, 'The Greatest Painter in Japan.'' Hired by the Grand Lord to put the underworld on canvas, the single-minded painter fulfills his commission with startling, yet understated results.",
     info: {
       bahasa: "Inggris",
-      penerbit: "Gramedia",
-      halaman: "350 halaman",
-      tanggal: "2020",
+      penerbit: "Disruptive Publishing, Inc",
+      halaman: "52 halaman",
+      tanggal: "2010",
       penulis: "Ryūnosuke Akutagawa",
-      format: "Hardcover",
+      format: "Pdf",
     },
   };
 
   const [tab, setTab] = useState("sinopsis");
 
-  // === ULASAN UTAMA + BALASAN ===
-  const [ulasanList, setUlasanList] = useState([
+  // ================================
+  // 🟦 LOCAL STORAGE MANAGEMENT
+  // ================================
+  const storageKey = "ulasan-" + book.title.replace(/\s+/g, "-").toLowerCase();
+
+  const loadUlasan = () => {
+    const saved = localStorage.getItem(storageKey);
+    return saved ? JSON.parse(saved) : null;
+  };
+
+  const saveUlasan = (data) => {
+    localStorage.setItem(storageKey, JSON.stringify(data));
+  };
+
+  const defaultUlasan = [
     {
       nama: "Anonim 1",
       rating: 4,
@@ -59,37 +71,48 @@ function DetailBuku() {
       liked: false,
       balasan: [],
     },
-  ]);
+  ];
 
-  // === INPUT ULASAN BARU ===
+  // ⬅ PENTING! LOAD DATA SEKALI DI useState (BIAR TIDAK KE-RESET)
+  const [ulasanList, setUlasanList] = useState(() => {
+    const saved = loadUlasan();
+    return saved || defaultUlasan;
+  });
+
+  // SAVE KE LOCAL STORAGE SETIAP ADA PERUBAHAN
+  useEffect(() => {
+    saveUlasan(ulasanList);
+  }, [ulasanList]);
+
+  // ================================
+  // 🟦 INPUT ULASAN PENGGUNA
+  // ================================
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState("");
 
-  // === BALASAN ===
+  const kirimUlasanBaru = () => {
+    if (newRating === 0 || newComment.trim() === "") return;
+
+    const newUlasan = {
+      nama: "Pengguna",
+      rating: newRating,
+      komentar: newComment,
+      like: 0,
+      liked: false,
+      balasan: [],
+    };
+
+    setUlasanList([newUlasan, ...ulasanList]);
+    setNewRating(0);
+    setNewComment("");
+  };
+
+  // ================================
+  // 🟦 BALASAN
+  // ================================
   const [replyOpen, setReplyOpen] = useState(null);
   const [replyText, setReplyText] = useState("");
 
-  // ✔ Tambah ulasan utama baru
-  const kirimUlasanBaru = () => {
-    if (newComment.trim() === "" || newRating === 0) return;
-
-    setUlasanList([
-      {
-        nama: "Pengguna",
-        rating: newRating,
-        komentar: newComment,
-        like: 0,
-        liked: false,
-        balasan: [],
-      },
-      ...ulasanList,
-    ]);
-
-    setNewComment("");
-    setNewRating(0);
-  };
-
-  // ✔ Tambah balasan pada komentar tertentu
   const kirimBalasan = (index) => {
     if (replyText.trim() === "") return;
 
@@ -103,7 +126,9 @@ function DetailBuku() {
     setReplyText("");
   };
 
-  // ✔ LIKE TOGGLE
+  // ================================
+  // 🟦 LIKE TOGGLE
+  // ================================
   const handleLike = (index) => {
     const updated = [...ulasanList];
     const item = updated[index];
@@ -119,14 +144,24 @@ function DetailBuku() {
     setUlasanList(updated);
   };
 
+  // ================================
+  // 🟦 HAPUS ULASAN PENGGUNA
+  // ================================
+  const deleteUlasan = (index) => {
+    const updated = ulasanList.filter((_, i) => i !== index);
+    setUlasanList(updated);
+  };
+
+  // ================================
+  // 🟦 RENDER
+  // ================================
   return (
     <div className="detail-container">
-      {/* BACK BUTTON */}
       <ArrowLeft className="back-btn" onClick={() => navigate(-1)} />
 
       {/* BAGIAN ATAS */}
       <div className="detail-top">
-        <img src={book.cover} className="detail-cover" alt={book.title} />
+        <img src={book.cover} className="detail-cover" />
 
         <div className="detail-info">
           <h2>{book.title}</h2>
@@ -141,9 +176,7 @@ function DetailBuku() {
 
           <div className="genre-row">
             {book.genre.map((g, i) => (
-              <span className="genre" key={i}>
-                {g}
-              </span>
+              <span key={i} className="genre">{g}</span>
             ))}
           </div>
 
@@ -157,49 +190,55 @@ function DetailBuku() {
           className={`tab-btn ${tab === "sinopsis" ? "active" : ""}`}
           onClick={() => setTab("sinopsis")}
         >
-          <BookOpen size={18} />
-          <span>Sinopsis</span>
+          <BookOpen size={18} /> Sinopsis
         </button>
 
         <button
           className={`tab-btn ${tab === "info" ? "active" : ""}`}
           onClick={() => setTab("info")}
         >
-          <Info size={18} />
-          <span>Informasi Buku</span>
+          <Info size={18} /> Informasi
         </button>
 
         <button
           className={`tab-btn ${tab === "ulasan" ? "active" : ""}`}
           onClick={() => setTab("ulasan")}
         >
-          <MessageSquare size={18} />
-          <span>Ulasan</span>
+          <MessageSquare size={18} /> Ulasan
         </button>
       </div>
 
-      {/* BLUE CONTENT BOX */}
+      {/* CONTENT BOX */}
       <div className="content-box">
-        {/* === SINOPSIS === */}
-        {tab === "sinopsis" && <p className="sinopsis">{book.sinopsis}</p>}
 
-        {/* === INFORMASI BUKU === */}
+        {/* ======================= */}
+        {/* SINOPSIS */}
+        {/* ======================= */}
+        {tab === "sinopsis" && (
+          <p className="sinopsis">{book.sinopsis}</p>
+        )}
+
+        {/* ======================= */}
+        {/* INFO */}
+        {/* ======================= */}
         {tab === "info" && (
           <div className="info-grid">
-            <div><strong>Bahasa</strong><br />{book.info.bahasa}</div>
-            <div><strong>Tanggal Rilis</strong><br />{book.info.tanggal}</div>
-            <div><strong>Penerbit</strong><br />{book.info.penerbit}</div>
-            <div><strong>Penulis</strong><br />{book.info.penulis}</div>
-            <div><strong>Jumlah Halaman</strong><br />{book.info.halaman}</div>
-            <div><strong>Format</strong><br />{book.info.format}</div>
+            <div><strong>Bahasa:</strong><br />{book.info.bahasa}</div>
+            <div><strong>Tanggal Rilis:</strong><br />{book.info.tanggal}</div>
+            <div><strong>Penerbit:</strong><br />{book.info.penerbit}</div>
+            <div><strong>Penulis:</strong><br />{book.info.penulis}</div>
+            <div><strong>Jumlah Halaman:</strong><br />{book.info.halaman}</div>
+            <div><strong>Format:</strong><br />{book.info.format}</div>
           </div>
         )}
 
-        {/* === ULASAN === */}
+        {/* ======================= */}
+        {/* ULASAN */}
+        {/* ======================= */}
         {tab === "ulasan" && (
           <div className="ulasan-wrapper">
 
-            {/* INPUT ULASAN BARU */}
+            {/* FORM INPUT ULASAN */}
             <div className="ulasan-input-box">
               <p className="label-ulasan">Berikan Ulasan Anda</p>
 
@@ -208,9 +247,9 @@ function DetailBuku() {
                   <Star
                     key={i}
                     size={26}
-                    className="rating-star"
                     fill={newRating > i ? "#f5c518" : "none"}
                     color="#f5c518"
+                    className="rating-star"
                     onClick={() => setNewRating(i + 1)}
                   />
                 ))}
@@ -218,8 +257,8 @@ function DetailBuku() {
 
               <textarea
                 className="input-ulasan"
-                placeholder="Tulis pendapatmu tentang buku ini…"
                 value={newComment}
+                placeholder="Tulis pendapatmu…"
                 onChange={(e) => setNewComment(e.target.value)}
               />
 
@@ -231,6 +270,8 @@ function DetailBuku() {
             {/* LIST ULASAN */}
             {ulasanList.map((u, index) => (
               <div key={index} className="ulasan-item">
+
+                {/* HEADER */}
                 <div className="ulasan-header">
                   <div className="profile-circle" />
 
@@ -239,12 +280,7 @@ function DetailBuku() {
 
                     <div className="rating-small">
                       {Array.from({ length: u.rating }).map((_, i) => (
-                        <Star
-                          key={i}
-                          size={14}
-                          fill="#f5c518"
-                          color="#f5c518"
-                        />
+                        <Star key={i} size={14} fill="#f5c518" color="#f5c518" />
                       ))}
                     </div>
 
@@ -252,16 +288,17 @@ function DetailBuku() {
 
                     <div className="ulasan-actions">
 
-                      {/* LIKE TOGGLE */}
+                      {/* LIKE */}
                       <span className="like" onClick={() => handleLike(index)}>
                         <ThumbsUp
                           size={16}
-                          color={u.liked ? "#ffffff" : "#cccccc"}
                           fill={u.liked ? "#ffffff" : "none"}
+                          color={u.liked ? "#ffffff" : "#cccccc"}
                         />
                         {u.like}
                       </span>
 
+                      {/* BALAS */}
                       <span
                         className="balasan-toggle"
                         onClick={() =>
@@ -270,6 +307,13 @@ function DetailBuku() {
                       >
                         {u.balasan.length} Balasan
                       </span>
+
+                      {/* DELETE */}
+                      {u.nama === "Pengguna" && (
+                        <span className="hapus-btn" onClick={() => deleteUlasan(index)}>
+                          <Trash2 size={16} color="#ff4444" />
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -287,11 +331,10 @@ function DetailBuku() {
                       </div>
                     ))}
 
-                    {/* INPUT BALAS */}
                     <div className="balasan-input">
                       <input
                         type="text"
-                        placeholder="Ketikkan balasan di sini…"
+                        placeholder="Ketik balasan…"
                         value={replyText}
                         onChange={(e) => setReplyText(e.target.value)}
                       />
@@ -304,7 +347,7 @@ function DetailBuku() {
           </div>
         )}
 
-        {/* TOMBOL BACA HANYA UNTUK SINOPSIS + INFO */}
+        {/* BACA SEKARANG (hilang di tab ulasan) */}
         {tab !== "ulasan" && (
           <button className="read-btn" onClick={() => navigate("/baca")}>
             Baca Sekarang

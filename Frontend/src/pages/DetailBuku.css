@@ -49,8 +49,8 @@
 }
 
 .status {
-  background: #d5f5d5;
-  color: #2e7b2e;
+  background: #f5d5d5ff;
+  color: #7b2e2eff;
   padding: 5px 14px;
   border-radius: 12px;
   font-size: 12px;
@@ -102,9 +102,11 @@
   transition: 0.2s;
   color: #222;
   position: relative;
-  margin-top: -140px;
+  margin-top: -180px;
   margin-left: 20px;
   z-index: 3;
+  font-size: px;
+  text-align: justify;
 }
 
 .tab-btn svg {
@@ -115,6 +117,7 @@
   background: #f1c232;
   border-color: #f1c232;
   color: #ffffff;
+  margin-top: -188px;
 }
 
 .tab-btn.active svg {
@@ -129,9 +132,9 @@
   background: #162b45;
   color: white;
   width: 80%;
-  padding: 60px;
+  padding: 44px;
   margin-left: 310px;
-  margin-top: -179px;
+  margin-top: -208px;
   min-height: 389px;
   position: relative;
   z-index: 1;
@@ -166,7 +169,7 @@
 }
 
 .ulasan-wrapper {
-  padding-left: 120px;
+  padding-left: 130px;
   padding-right: 40px;
   max-height: 300px;
   overflow-y: auto;
@@ -264,6 +267,7 @@
   padding: 20px;
   border-radius: 12px;
   margin-bottom: 25px;
+  margin-right: 10px;
 }
 
 .label-ulasan {
@@ -305,21 +309,30 @@
 }
 
 /* === WRAPPER ULASAN (scroll smooth) === */
+/* AREA ULASAN */
 .ulasan-wrapper {
-  padding-left: 120px;
-  padding-right: 40px;
-  max-height: 350px;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  max-height: 305px;     /* tinggi kotak ulasan */
+  overflow-y: auto;      /* scroll hanya vertikal */
+  overflow-x: hidden;    /* HILANGKAN scroll horizontal */
+  padding-right: 10px;   /* biar isi tidak ketutup scrollbar */
 }
 
+/* SCROLLBAR TIPIS */
 .ulasan-wrapper::-webkit-scrollbar {
-  width: 6px;
+  width: 6px;      /* tipisin */
 }
 
 .ulasan-wrapper::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgba(255,255,255,0.3);
   border-radius: 10px;
+}
+
+.ulasan-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ulasan-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .ulasan-wrapper::-webkit-scrollbar-thumb:hover {
