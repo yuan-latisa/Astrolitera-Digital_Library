@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./HomePage.css";
 import { Search, Menu } from "lucide-react";
 import bannerImg from "../assets/book.png";
-import logoImg from "../assets/book.png";
+import logoImg from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import SideMenu from "../components/SideMenu";
 import BookRow from "../components/BookRow";
@@ -20,21 +20,10 @@ const dummyBooks = [
   { cover: examplecover, title: "Pergi", author: "Tere Liye", rating: 4.5 },
   { cover: examplecover, title: "Pergi", author: "Tere Liye", rating: 4.5 },
   { cover: examplecover, title: "Pergi", author: "Tere Liye", rating: 4.5 },
-
 ];
 
-import { useNavigate } from "react-router-dom";
-
-function HomePage() {
+function HomePage() { 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const navigate = useNavigate();
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && search.trim() !== "") {
-      navigate(`/search?query=${encodeURIComponent(search)}`);
-    }
-  };
 
   return (
     <div className="page-wrapper">
@@ -51,15 +40,8 @@ function HomePage() {
         <div className="header-right">
           <div className="search-box">
             <Search size={18} className="search-icon" />
-            <input
-              type="text"
-              placeholder="Cari Buku..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
+            <input type="text" placeholder="Cari Buku..." />
           </div>
-
 
           <Menu
             size={30}
