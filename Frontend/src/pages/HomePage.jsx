@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./HomePage.css";
 import { Search, Menu } from "lucide-react";
-import bannerImg from "../assets/book.png";
+import bannerImg from "../assets/banner.png";
 import logoImg from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import SideMenu from "../components/SideMenu";
