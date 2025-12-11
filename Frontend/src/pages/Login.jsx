@@ -16,33 +16,42 @@ function Login() {
   });
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    let { name, value } = e.target;
+
+  // Jika field yang diubah adalah "nis"
+  if (name === "nis") {
+    // Hapus semua karakter yang bukan angka
+    value = value.replace(/[^0-9]/g, "");
+  }
+    setForm({ ...form, [name]: value });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          alert("Berhasil Masuk!");
-          navigate("./HomePage.jsx");
-        } else {
-          alert(data.message || "Login gagal");
-        }
-      })
-      .catch((err) => console.error(err));
+    // Ambil data user dari localStorage
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Cek apakah user cocok
+    const found = users.find(
+      (u) =>
+        u.nis === form.nis &&
+        u.nama.toLowerCase() === form.nama.toLowerCase() &&
+        u.password === form.password
+    );
+
+    if (!found) {
+      alert("NIS, Nama, atau Password salah!");
+      return;
+    }
+
+    alert("Berhasil Masuk!");
+    navigate("/home");
   }
 
   return (
     <div className="reg-container">
 
-      {/* BAGIAN KIRI */}
       <div className="reg-left">
         <div className="reg-back" onClick={() => navigate(-1)}>←</div>
 
@@ -56,6 +65,8 @@ function Login() {
             name="nis"
             value={form.nis}
             onChange={handleChange}
+            maxLength={10} inputMode="numeric" 
+            pattern="[0-9]*" placeholder="1000000000"
           />
 
           <label>Nama :</label>
@@ -90,7 +101,6 @@ function Login() {
           </button>
         </form>
 
-        {/* LINK BAWAH */}
         <div className="reg-links">
           <p className="as-guest" onClick={() => navigate("/home")}>
             Lanjut Sebagai Tamu
@@ -105,10 +115,8 @@ function Login() {
         </div>
       </div>
 
-      {/* GAMBAR BUKU */}
       <img src={bookImg} alt="Books" className="book-image" />
 
-      {/* PANEL KANAN */}
       <div className="reg-right">
         <div className="vertical-text">WELCOME</div>
         <p className="brand-text">ASTROLITERA<br />DIGITAL LIBRARY</p>

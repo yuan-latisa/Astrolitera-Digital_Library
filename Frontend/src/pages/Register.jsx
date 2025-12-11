@@ -21,8 +21,17 @@ function Register() {
   const fileInputRef = useRef(null);
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  let { name, value } = e.target;
+
+  // Jika field yang diubah adalah "nis"
+  if (name === "nis") {
+    // Hapus semua karakter yang bukan angka
+    value = value.replace(/[^0-9]/g, "");
   }
+
+  setForm({ ...form, [name]: value });
+}
+
 
   function handleFileChange(e) {
     const file = e.target.files?.[0];
@@ -56,27 +65,37 @@ function Register() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("nis", form.nis);
-    formData.append("nama", form.nama);
-    formData.append("kelas", form.kelas);
-    formData.append("password", form.password);
+  // Ambil data lama dari localStorage
+  let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    if (kartu) formData.append("kartu", kartu);
+  // Cek apakah NIS sudah terdaftar
+  const exists = users.some((u) => u.nis === form.nis);
 
-    fetch("http://localhost:5000/register", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then(() => {
-        alert("Pendaftaran berhasil!");
-        navigate("./HomePage.jsx");
-      })
-      .catch((err) => console.error(err));
+  if (exists) {
+    alert("NIS sudah terdaftar!");
+    return;
   }
+
+  // Convert file ke Base64 agar bisa disimpan
+  const reader = new FileReader();
+  reader.onload = () => {
+    const userData = {
+      ...form,
+      kartu: reader.result || null, // Base64 gambar
+    };
+
+    users.push(userData);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Akun berhasil dibuat!");
+    navigate("/login"); // Sesuaikan path login
+  };
+
+  if (kartu) reader.readAsDataURL(kartu);
+  else reader.onload();
+}
 
   return (
     <div className="reg-container">
@@ -88,7 +107,7 @@ function Register() {
 
         <form onSubmit={handleSubmit} className="reg-form">
           <label>NIS :</label>
-          <input type="text" name="nis" value={form.nis} onChange={handleChange} />
+          <input type="text" name="nis" maxLength={10} inputMode="numeric" pattern="[0-9]*" value={form.nis} onChange={handleChange} placeholder="1000000000"/>
 
           <label>Nama :</label>
           <input type="text" name="nama" value={form.nama} onChange={handleChange} />
@@ -152,7 +171,7 @@ function Register() {
           <p className="as-guest" onClick={() => navigate("./HomePage.jsx")}>Lanjut Sebagai Tamu</p>
           <p className="login-text">
             Sudah Punya Akun?{" "}
-            <span onClick={() => navigate("./Login.jsx")} className="login-link">
+            <span onClick={() => navigate("/login")} className="login-link">
               Masuk Di Sini
             </span>
           </p>
@@ -169,5 +188,4 @@ function Register() {
     </div>
   );
 }
-
 export default Register;

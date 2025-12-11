@@ -1,64 +1,186 @@
-import { useEffect, useRef, useState } from "react";
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/build/pdf";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  getDocument,
+  GlobalWorkerOptions,
+} from "pdfjs-dist/build/pdf";
 import pdfWorker from "pdfjs-dist/build/pdf.worker?url";
-import Hell_Screen from "../assets/Hell_Screen.pdf";
+import { useNavigate } from "react-router-dom";
 import "../components/BookReader.css";
 
+import defaultPdf from "../assets/Hell_Screen.pdf";
+
 GlobalWorkerOptions.workerSrc = pdfWorker;
-function BookReader() {
-  const canvasRef = useRef(null);
+
+export default function BookReader({ pdfSrc = defaultPdf }) {
   const containerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const thumbsRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const [pdfDoc, setPdfDoc] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
+  // Scale default 100%
+  const [scale, setScale] = useState(1);
+  const [thumbScale] = useState(0.18);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load PDF
   useEffect(() => {
-    const loadPDF = async () => {
-      const pdf = await getDocument({ url: Hell_Screen }).promise; // FIX
-      const page = await pdf.getPage(pageNumber);
+    let mounted = true;
+    const load = async () => {
+      setIsLoading(true);
+      const loadingTask = getDocument({ url: pdfSrc });
+      const pdf = await loadingTask.promise;
+      if (!mounted) return;
+      setPdfDoc(pdf);
+      setTotalPages(pdf.numPages);
+      setIsLoading(false);
+    };
+    load();
 
-      const viewport = page.getViewport({ scale: 1.5 });
+    return () => { mounted = false };
+  }, [pdfSrc]);
+
+  // Render main canvas
+  useEffect(() => {
+    if (!pdfDoc) return;
+
+    const renderPage = async (num) => {
+      const page = await pdfDoc.getPage(num);
+      const viewport = page.getViewport({ scale });
       const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
 
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(viewport.width * ratio);
+      canvas.height = Math.floor(viewport.height * ratio);
+      canvas.style.width = `${viewport.width}px`;
+      canvas.style.height = `${viewport.height}px`;
 
-      await page.render({ canvasContext: context, viewport }).promise;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
     };
 
-    loadPDF();
-  }, [pageNumber]);
+    renderPage(pageNumber).catch(console.error);
+  }, [pdfDoc, pageNumber, scale]);
 
-  const openFullscreen = () => {
+  // Render thumbnails
+  useEffect(() => {
+    if (!pdfDoc || !thumbsRef.current) return;
+
+    const container = thumbsRef.current;
+    container.innerHTML = "";
+
+    const renderThumb = async (p) => {
+      const page = await pdfDoc.getPage(p);
+      const viewport = page.getViewport({ scale: thumbScale });
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(viewport.width * ratio);
+      canvas.height = Math.floor(viewport.height * ratio);
+      canvas.style.width = `${viewport.width}px`;
+      canvas.style.height = `${viewport.height}px`;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "thumb-wrapper";
+      wrapper.appendChild(canvas);
+
+      const label = document.createElement("div");
+      label.className = "thumb-label";
+      label.innerText = p;
+      wrapper.appendChild(label);
+
+      wrapper.onclick = () => {
+        setPageNumber(p);
+        wrapper.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      };
+
+      container.appendChild(wrapper);
+    };
+
+    (async () => {
+      for (let i = 1; i <= pdfDoc.numPages; i++) {
+        await renderThumb(i);
+      }
+    })();
+  }, [pdfDoc, thumbScale]);
+
+  // Navigation
+  const prevPage = () => setPageNumber((p) => Math.max(1, p - 1));
+  const nextPage = () => setPageNumber((p) => Math.min(totalPages, p + 1));
+
+  const zoomIn = () => setScale((s) => Math.min(3, +(s + 0.25).toFixed(2)));
+  const zoomOut = () => setScale((s) => Math.max(0.5, +(s - 0.25).toFixed(2)));
+
+  const openFullscreen = async () => {
     const elem = containerRef.current;
-    if (elem.requestFullscreen) elem.requestFullscreen();
+    if (!elem) return;
+    if (elem.requestFullscreen) await elem.requestFullscreen();
   };
 
   return (
-    <div className="book-reader-container">
-      <button
-        onClick={openFullscreen}
-        class="book-reader-fullscreen"
-      >
-        ⛶ Fullscreen Halaman
-      </button>
+    <div className="reader-root">
+      {/* TOP BAR */}
+      <div className="reader-topbar">
 
-      <div ref={containerRef}>
-        <canvas ref={canvasRef} style={{ maxWidth: "100%" }} />
+        <div className="reader-left">
+          <button className="icon-btn" onClick={() => navigate(-1)}>← Kembali</button>
+          <span className="back-left"></span>
+        </div>
+
+        <div className="reader-controls">
+          <button className="icon-btn" onClick={zoomOut}>-</button>
+          <span className="zoom-label">{Math.round(scale * 100)}%</span>
+          <button className="icon-btn" onClick={zoomIn}>+</button>
+
+          <button className="icon-btn" onClick={openFullscreen}>⛶</button>
+
+          <a className="icon-btn download-btn" href={pdfSrc} download>
+            ⬇
+          </a>
+        </div>
       </div>
 
-      <div style={{ marginTop: "15px" }}>
-        <button onClick={() => setPageNumber((page) => page - 1)} disabled={pageNumber <= 1}>
-          ◀ Prev
-        </button>
+      {/* MAIN BODY */}
+      <div className="reader-body" ref={containerRef}>
 
-        <span style={{ margin: "0 10px" }}>Halaman {pageNumber}</span>
+        {/* SIDEBAR */}
+        <aside className="thumb-sidebar">
+          <div className="page-count">Halaman</div>
+          <div className="thumbs" ref={thumbsRef} />
+        </aside>
 
-        <button onClick={() => setPageNumber((page) => page + 1)}>
-          Next ▶
-        </button>
+        {/* VIEWER */}
+        <main className="viewer-area">
+          <div className="canvas-wrap">
+            {isLoading ? (
+              <div className="loading">Memuat PDF...</div>
+            ) : (
+              <canvas ref={canvasRef} className="pdf-canvas" />
+            )}
+          </div>
+
+          <div className="viewer-bottom">
+            <button className="nav-btn" onClick={prevPage}>◀ Sebelumnya</button>
+            <div className="page-indicator">
+              Halaman <strong>{pageNumber}/{totalPages}</strong>
+            </div>
+            <button className="nav-btn" onClick={nextPage}>Berikutnya ▶</button>
+          </div>
+        </main>
+
       </div>
     </div>
   );
 }
-
-export default BookReader;
