@@ -1,0 +1,66 @@
+.kategori-container {
+  padding: 22px 25px;
+}
+
+/* HEADER */
+.kategori-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 14px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.kategori-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* VIEW BUTTONS */
+.view-buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.view-icon {
+  cursor: pointer;
+  opacity: 0.45;
+  transition: 0.2s;
+}
+
+.view-icon.active {
+  opacity: 1;
+  color: #f4c521; /* kuning */
+}
+
+.view-icon:hover {
+  opacity: 1;
+}
+
+/* GRID MODE */
+.kategori-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 28px;
+}
+
+/* LIST MODE — 2 KOLOM */
+.kategori-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 768px) {
+  .kategori-list {
+    grid-template-columns: 1fr;
+  }
+}

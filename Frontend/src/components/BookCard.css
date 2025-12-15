@@ -1,0 +1,98 @@
+/* GRID MODE */
+.book-card {
+  width: 150px;
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.book-cover {
+  width: 100%;
+  height: 180px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.book-card.list-mode{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  grid-template-rows: auto auto;
+  flex-direction: row;
+  gap: 18px;
+  padding: 18px;
+  position: relative;
+  border-radius: 12px;
+}
+
+/* COVER LIST MODE */
+.book-card.list-mode .book-cover {
+  width: 130px;
+  height: 175px;
+  grid-row: 1 / span 2;
+}
+
+/* BOOKMARK POJOK KANAN ATAS */
+.bookmark-icon-list {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.bookmark-icon-list:hover {
+  opacity: 1;
+}
+
+/* CONTENT AREA */
+.book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* GENRE */
+.genre-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.genre-tag {
+  background: #eee;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* RATING LIST */
+.list-rating {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.sinopsis {
+  grid-column: 2;
+  font-size: 13px;
+  opacity: 0.8;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.book-row .book-card {
+  min-width: 150px !important;
+}
