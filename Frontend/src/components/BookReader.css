@@ -2,7 +2,7 @@
 .reader-root {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #121726 0%, #0f1220 100%);
