@@ -2,10 +2,11 @@
 .reader-root {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   color: #fff;
-  height: auto;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #121726 0%, #0f1220 100%);
+  overflow: hidden;
 }
 
 /* topbar */
@@ -19,6 +20,14 @@
   color: #fff;
 }
 
+/* Disable all hover visual changes inside the topbar (keeps pointer) */
+/* allow subtle background highlight on header buttons without lift */
+.reader-topbar .icon-btn:hover {
+  background: rgba(255,255,255,0.03) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
 .back-left {
   font-weight: 600;
   font-size: 16px;
@@ -27,22 +36,65 @@
 .reader-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .icon-btn {
-  background: #2e3b47;
+  background: transparent;
   color: #fff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 120ms, transform 120ms;
 }
 
-.download-btn {
-  background: #4a2b8a;
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
 }
+
+/* hover effects removed per request */
+
+.download-btn {
+  background: linear-gradient(180deg,#6f3fc0,#4a2b8a);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.download-btn svg { color: #fff; }
+
+/* plain separate back button on the left (icon + text) */
+.back-btn-plain {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.back-btn-plain svg {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+.back-btn-plain .back-text { font-size: 15px; line-height: 1; }
+.back-btn-plain:hover { background: rgba(255,255,255,0.02); transform: none; box-shadow: none; }
 
 .zoom-label {
   min-width: 48px;
@@ -58,15 +110,38 @@
   box-sizing: border-box;
 }
 
+.reader-body, .viewer-area {
+  min-height: 0;
+}
+
+/* Specific styling for the reader back button */
+.icon-btn.reader-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+.icon-btn.reader-back-btn svg {
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+}
+
 /* sidebar thumbnails */
 .thumb-sidebar {
-  width: 150px;
+  width: 178px;
   background: #142536;
   border-radius: 6px;
   padding: 12px;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   overflow-y: auto;
-  height: calc(100vh - 86px);
+  height: auto;
+  max-height: calc(100vh - 86px);
 }
 
 .page-count {
@@ -80,7 +155,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* each thumbnail wrapper */
@@ -95,11 +170,7 @@
   width: 100%;
 }
 
-.thumb-wrapper:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
-  background: rgba(255, 255, 255, 0.02);
-}
+/* hover effects removed for thumbnails */
 
 /* canvas inside thumb (created dynamically) */
 .thumb-wrapper canvas {
@@ -135,7 +206,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 6px 30px rgba(7, 9, 14, 0.45);
-  height: calc(100vh - 220px);
+  min-height: 0; /* allow this flex child to scroll internally */
   overflow: auto;
 }
 
@@ -180,7 +251,8 @@
   }
   .canvas-wrap {
     width: 100%;
-    height: calc(100vh - 150px);
+    min-height: 0; /* prevent forcing page height on small screens */
+    overflow: auto;
   }
   .reader-left {
   display: flex;
@@ -196,7 +268,50 @@
   cursor: pointer;
 }
 
-.icon-btn:hover {
-  background: #dcdcdc;
+  /* responsive hover removed */
 }
+
+/* Custom scrollbar for the book reader (thumb sidebar and main canvas) */
+.thumb-sidebar,
+.canvas-wrap {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(74,43,138,0.9) rgba(255,255,255,0.02); /* thumb track */
 }
+
+/* WebKit-based browsers */
+.thumb-sidebar::-webkit-scrollbar,
+.canvas-wrap::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.thumb-sidebar::-webkit-scrollbar-track,
+.canvas-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thumb-sidebar::-webkit-scrollbar-thumb,
+.canvas-wrap::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #7b4ad8, #4a2b8a);
+  border-radius: 10px;
+  border: 2px solid rgba(255,255,255,0.03);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+}
+
+.thumb-sidebar::-webkit-scrollbar-thumb:hover,
+.canvas-wrap::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #8c5bf8, #5a3b9a);
+}
+
+/* Make sure the canvas area shows a subtle track when hovering */
+.canvas-wrap:hover::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.01);
+}
+
+/* Hide thumbnail sidebar when reader is fullscreen */
+.reader-body:fullscreen .thumb-sidebar,
+.reader-body:-webkit-full-screen .thumb-sidebar {
+  display: none !important;
+}
+
+

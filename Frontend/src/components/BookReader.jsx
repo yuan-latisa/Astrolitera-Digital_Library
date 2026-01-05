@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  getDocument,
-  GlobalWorkerOptions,
-} from "pdfjs-dist/build/pdf";
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist/build/pdf";
 import pdfWorker from "pdfjs-dist/build/pdf.worker?url";
 import { useNavigate } from "react-router-dom";
 import "../components/BookReader.css";
@@ -135,7 +132,12 @@ export default function BookReader({ pdfSrc = defaultPdf }) {
       <div className="reader-topbar">
 
         <div className="reader-left">
-          <button className="icon-btn" onClick={() => navigate(-1)}>← Kembali</button>
+          <button className="back-btn-plain" onClick={() => navigate(-1)} aria-label="Kembali">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 18L9 12l6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="back-text">Kembali</span>
+          </button>
           <span className="back-left"></span>
         </div>
 
@@ -146,8 +148,12 @@ export default function BookReader({ pdfSrc = defaultPdf }) {
 
           <button className="icon-btn" onClick={openFullscreen}>⛶</button>
 
-          <a className="icon-btn download-btn" href={pdfSrc} download>
-            ⬇
+          <a className="icon-btn download-btn" href={pdfSrc} download aria-label="Download PDF">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 3v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M8 11l4 4 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M21 21H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </a>
         </div>
       </div>

@@ -86,7 +86,7 @@ function HomePage() {
             </ul>
           </div>
 
-          <p className="footer-copy">© AstroLitera 2025</p>
+          <p className="footer-copy">&copy; {new Date().getFullYear()} AstroLitera</p>
         </footer>
 
       </div>
