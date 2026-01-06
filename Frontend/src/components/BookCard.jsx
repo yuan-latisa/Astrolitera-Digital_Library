@@ -1,6 +1,6 @@
 import React from "react";
 import "./BookCard.css";
-import { Star, Bookmark } from "lucide-react";
+import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function BookCard({ id, cover, title, author, rating, view, genre, sinopsis }) {
@@ -8,7 +8,7 @@ function BookCard({ id, cover, title, author, rating, view, genre, sinopsis }) {
 
     return (
         <div
-            className={`book-card ${view === "list" ? "list-mode" : ""}`}
+            className={`book-card ${view === "list" ? "list-mode" : "grid"}`}
             onClick={() => navigate(`/book/${title.toLowerCase().replace(/ /g, "-")}`)}
         >
             {/* COVER */}
@@ -16,15 +16,6 @@ function BookCard({ id, cover, title, author, rating, view, genre, sinopsis }) {
 
             {/* CONTENT AREA */}
             <div className="book-info">
-
-                {/* BOOKMARK DI POJOK KANAN ATAS */}
-                {view === "list" && (
-                    <Bookmark
-                        className="bookmark-icon-list"
-                        size={22}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                )}
 
                 {/* JUDUL + AUTHOR */}
                 <h3 className="book-title">{title}</h3>

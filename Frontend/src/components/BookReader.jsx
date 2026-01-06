@@ -23,6 +23,7 @@ export default function BookReader({ pdfSrc = defaultPdf }) {
   const [scale, setScale] = useState(1);
   const [thumbScale] = useState(0.18);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Load PDF
   useEffect(() => {

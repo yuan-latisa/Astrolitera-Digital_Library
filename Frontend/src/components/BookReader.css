@@ -20,8 +20,6 @@
   color: #fff;
 }
 
-/* Disable all hover visual changes inside the topbar (keeps pointer) */
-/* allow subtle background highlight on header buttons without lift */
 .reader-topbar .icon-btn:hover {
   background: rgba(255,255,255,0.03) !important;
   box-shadow: none !important;
@@ -59,8 +57,6 @@
   width: 18px;
   height: 18px;
 }
-
-/* hover effects removed per request */
 
 .download-btn {
   background: linear-gradient(180deg,#6f3fc0,#4a2b8a);
@@ -114,7 +110,6 @@
   min-height: 0;
 }
 
-/* Specific styling for the reader back button */
 .icon-btn.reader-back-btn {
   display: inline-flex;
   align-items: center;
@@ -170,9 +165,6 @@
   width: 100%;
 }
 
-/* hover effects removed for thumbnails */
-
-/* canvas inside thumb (created dynamically) */
 .thumb-wrapper canvas {
   border-radius: 4px;
   display: block;
@@ -206,7 +198,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 6px 30px rgba(7, 9, 14, 0.45);
-  min-height: 0; /* allow this flex child to scroll internally */
+  min-height: 0; 
   overflow: auto;
 }
 
@@ -251,7 +243,7 @@
   }
   .canvas-wrap {
     width: 100%;
-    min-height: 0; /* prevent forcing page height on small screens */
+    min-height: 0; 
     overflow: auto;
   }
   .reader-left {
@@ -268,14 +260,13 @@
   cursor: pointer;
 }
 
-  /* responsive hover removed */
 }
 
 /* Custom scrollbar for the book reader (thumb sidebar and main canvas) */
 .thumb-sidebar,
 .canvas-wrap {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: rgba(74,43,138,0.9) rgba(255,255,255,0.02); /* thumb track */
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(74,43,138,0.9) rgba(255,255,255,0.02); 
 }
 
 /* WebKit-based browsers */
@@ -313,5 +304,3 @@
 .reader-body:-webkit-full-screen .thumb-sidebar {
   display: none !important;
 }
-
-

@@ -24,13 +24,11 @@
 .book-card.list-mode{
   width: 100%;
   display: grid;
-  grid-template-columns: 130px 1fr;
-  grid-template-rows: auto auto;
-  flex-direction: row;
-  gap: 18px;
+  grid-template-columns: 150px 1fr;
+  gap: 20px;
   padding: 18px;
-  position: relative;
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
 }
 
 /* COVER LIST MODE */
@@ -38,6 +36,11 @@
   width: 130px;
   height: 175px;
   grid-row: 1 / span 2;
+}
+
+.book-card.list-mode .sinopsis {
+  text-align: left;
+  margin-left: -8px;
 }
 
 /* BOOKMARK POJOK KANAN ATAS */
@@ -86,11 +89,10 @@
 }
 
 .sinopsis {
-  grid-column: 2;
   font-size: 13px;
-  opacity: 0.8;
-  line-height: 1.4;
-  margin-top: 4px;
+  opacity: .85;
+  margin-top: 6px;
+  line-height: 1.5;
 }
 
 .book-row .book-card {
