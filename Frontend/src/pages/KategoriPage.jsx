@@ -31,6 +31,8 @@ export default function KategoriPage() {
           <ArrowLeft size={28} strokeWidth={2.2} />
         </button>
 
+        <p className="rekomendasi-text">Rekomendasi</p>
+
         <h2 className="kategori-title">
           {(nama ?? "").replace(/-/g, " ")}
         </h2>

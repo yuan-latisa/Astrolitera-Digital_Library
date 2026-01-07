@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
+import ForgotPass1 from "../components/ForgotPass1.jsx";
 import { Eye, EyeOff } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ function Login() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
 
   const [form, setForm] = useState({
     nis: "",
@@ -18,11 +20,11 @@ function Login() {
   function handleChange(e) {
     let { name, value } = e.target;
 
-  // Jika field yang diubah adalah "nis"
-  if (name === "nis") {
-    // Hapus semua karakter yang bukan angka
-    value = value.replace(/[^0-9]/g, "");
-  }
+    // Jika field yang diubah adalah "nis"
+    if (name === "nis") {
+      // Hapus semua karakter yang bukan angka
+      value = value.replace(/[^0-9]/g, "");
+    }
     setForm({ ...form, [name]: value });
   }
 
@@ -65,7 +67,7 @@ function Login() {
             name="nis"
             value={form.nis}
             onChange={handleChange}
-            maxLength={10} inputMode="numeric" 
+            maxLength={10} inputMode="numeric"
             pattern="[0-9]*" placeholder="1000000000"
           />
 
@@ -94,7 +96,9 @@ function Login() {
             </span>
           </div>
 
-          <p className="forgot-pass">Lupa Kata Sandi Anda?</p>
+          <p className="forgot-pass" onClick={() => setShowForgot(true)}>
+            Lupa Kata Sandi Anda?
+          </p>
 
           <button className="reg-submit" type="submit">
             Masuk
@@ -121,6 +125,8 @@ function Login() {
         <div className="vertical-text">WELCOME</div>
         <p className="brand-text">ASTROLITERA<br />DIGITAL LIBRARY</p>
       </div>
+
+      {showForgot && <ForgotPass1 onClose={() => setShowForgot(false)} />}
 
     </div>
   );

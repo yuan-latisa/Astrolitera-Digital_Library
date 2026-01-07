@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 25px;
+  margin-top: -20px;
   gap: 14px;
 }
 
@@ -15,9 +16,13 @@
 }
 
 .view-buttons {
-  margin-left: auto;
   display: flex;
-  gap: 14px;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: #e4e4e5ff; 
+  margin-top: 55px;
+  margin-left: auto;
 }
 
 .view-icon {
@@ -60,4 +65,10 @@
   display: grid;
   place-items: center;
   cursor: pointer;
+}
+
+.rekomendasi-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 6px;
 }
