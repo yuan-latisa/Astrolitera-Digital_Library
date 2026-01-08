@@ -4,9 +4,13 @@ import { Camera, X } from "lucide-react";
 import { Eye, EyeOff } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
+import PopupStatus from "../components/PopupStatus";
+import Toast from "../components/Toast";
 
 function Register() {
   const navigate = useNavigate();
+
+  const [toast, setToast] = useState(null);
 
   const [form, setForm] = useState({
     nis: "",
@@ -19,18 +23,19 @@ function Register() {
 
   const [kartu, setKartu] = useState(null);
   const fileInputRef = useRef(null);
+  const [popupType, setPopupType] = useState(null);
 
   function handleChange(e) {
-  let { name, value } = e.target;
+    let { name, value } = e.target;
 
-  // Jika field yang diubah adalah "nis"
-  if (name === "nis") {
-    // Hapus semua karakter yang bukan angka
-    value = value.replace(/[^0-9]/g, "");
+    // Jika field yang diubah adalah "nis"
+    if (name === "nis") {
+      // Hapus semua karakter yang bukan angka
+      value = value.replace(/[^0-9]/g, "");
+    }
+
+    setForm({ ...form, [name]: value });
   }
-
-  setForm({ ...form, [name]: value });
-}
 
 
   function handleFileChange(e) {
@@ -64,41 +69,69 @@ function Register() {
     if (fileInputRef.current) fileInputRef.current.click();
   }
 
+  
+
+  function showToast(type, message) {
+  setToast({ type, message });
+
+  setTimeout(() => {
+    setToast(null);
+  }, 8000);
+}
+
   function handleSubmit(e) {
-  e.preventDefault();
+    e.preventDefault();
+    // Validasi semua field terisi
+    if (
+      !form.nis.trim() ||
+      !form.nama.trim() ||
+      !form.kelas.trim() ||
+      !form.password.trim() ||
+      !kartu
+    ) {
+      showToast("error", "Data belum lengkap, silakan periksa lagi.");
+      return;
+    }
 
-  // Ambil data lama dari localStorage
-  let users = JSON.parse(localStorage.getItem("users")) || [];
+    // Ambil data lama dari localStorage
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-  // Cek apakah NIS sudah terdaftar
-  const exists = users.some((u) => u.nis === form.nis);
+    // Cek apakah NIS sudah terdaftar
+    const exists = users.some((u) => u.nis === form.nis);
 
-  if (exists) {
-    alert("NIS sudah terdaftar!");
-    return;
-  }
+    if (exists) {
+      alert("NIS sudah terdaftar!");
+      return;
+    }
 
-  // Convert file ke Base64 agar bisa disimpan
-  const reader = new FileReader();
-  reader.onload = () => {
-    const userData = {
-      ...form,
-      kartu: reader.result || null, // Base64 gambar
+    // Convert file ke Base64 agar bisa disimpan
+    const reader = new FileReader();
+    reader.onload = () => {
+      const userData = {
+        ...form,
+        kartu: reader.result || null, // Base64 gambar
+      };
+
+      users.push(userData);
+      localStorage.setItem("users", JSON.stringify(users));
+
+      // Tampilkan popup pending (admin akan verifikasi)
+      setPopupType("pending");
     };
 
-    users.push(userData);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Akun berhasil dibuat!");
-    navigate("/login"); // Sesuaikan path login
-  };
-
-  if (kartu) reader.readAsDataURL(kartu);
-  else reader.onload();
-}
+    reader.readAsDataURL(kartu);
+  }
 
   return (
     <div className="reg-container">
+      {popupType && <PopupStatus type={popupType} />}
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
 
       <div className="reg-left">
         <div className="reg-back" onClick={() => navigate(-1)}>←</div>
@@ -107,7 +140,7 @@ function Register() {
 
         <form onSubmit={handleSubmit} className="reg-form">
           <label>NIS :</label>
-          <input type="text" name="nis" maxLength={10} inputMode="numeric" pattern="[0-9]*" value={form.nis} onChange={handleChange} placeholder="1000000000"/>
+          <input type="text" name="nis" maxLength={10} inputMode="numeric" pattern="[0-9]*" value={form.nis} onChange={handleChange} placeholder="1000000000" />
 
           <label>Nama :</label>
           <input type="text" name="nama" value={form.nama} onChange={handleChange} />
@@ -150,20 +183,20 @@ function Register() {
 
           <label>Kata Sandi :</label>
           <div className="password-wrapper">
-  <input
-    type={showPassword ? "text" : "password"}
-    name="password"
-    value={form.password}
-    onChange={handleChange}
-  />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+            />
 
-  <span
-    className="toggle-pass"
-    onClick={() => setShowPassword(!showPassword)}
-  >
-    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-  </span>
-</div>
+            <span
+              className="toggle-pass"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </span>
+          </div>
           <button className="reg-submit" type="submit">Daftar</button>
         </form>
 
