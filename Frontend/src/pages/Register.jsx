@@ -1,16 +1,12 @@
 import React, { useState, useRef } from "react";
 import "./Register.css";
-import { Camera, X } from "lucide-react";
-import { Eye, EyeOff } from "lucide-react";
+import { Camera, X, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
 import PopupStatus from "../components/PopupStatus";
-import Toast from "../components/Toast";
 
-function Register() {
+function Register({ showToast }) {
   const navigate = useNavigate();
-
-  const [toast, setToast] = useState(null);
 
   const [form, setForm] = useState({
     nis: "",
@@ -48,7 +44,7 @@ function Register() {
 
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!allowedTypes.includes(file.type)) {
-      alert("File harus berupa gambar (JPG atau PNG)");
+      showToast?.("error", "File harus berupa gambar (JPG atau PNG).");
       e.target.value = "";
       setKartu(null);
       return;
@@ -68,16 +64,6 @@ function Register() {
     e.stopPropagation();
     if (fileInputRef.current) fileInputRef.current.click();
   }
-
-  
-
-  function showToast(type, message) {
-  setToast({ type, message });
-
-  setTimeout(() => {
-    setToast(null);
-  }, 8000);
-}
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -100,7 +86,7 @@ function Register() {
     const exists = users.some((u) => u.nis === form.nis);
 
     if (exists) {
-      alert("NIS sudah terdaftar!");
+      showToast?.("error", "NIS sudah terdaftar!");
       return;
     }
 
@@ -125,28 +111,45 @@ function Register() {
   return (
     <div className="reg-container">
       {popupType && <PopupStatus type={popupType} />}
-      {toast && (
-        <Toast
-          type={toast.type}
-          message={toast.message}
-          onClose={() => setToast(null)}
-        />
-      )}
 
       <div className="reg-left">
-        <div className="reg-back" onClick={() => navigate(-1)}>←</div>
+        <button
+          type="button"
+          className="reg-back"
+          onClick={() => navigate(-1)}
+          aria-label="Kembali"
+        >
+          <ArrowLeft size={22} />
+        </button>
 
         <h1 className="reg-title">Daftar</h1>
 
         <form onSubmit={handleSubmit} className="reg-form">
           <label>NIS :</label>
-          <input type="text" name="nis" maxLength={10} inputMode="numeric" pattern="[0-9]*" value={form.nis} onChange={handleChange} placeholder="1000000000" />
+          <input 
+          type="text" 
+          name="nis" 
+          maxLength={10} 
+          inputMode="numeric" 
+          pattern="[0-9]*" value={form.nis} 
+          onChange={handleChange} 
+          placeholder="1000000000" />
 
           <label>Nama :</label>
-          <input type="text" name="nama" value={form.nama} onChange={handleChange} />
+          <input 
+          type="text" 
+          name="nama" 
+          value={form.nama} 
+          onChange={handleChange} 
+          placeholder="Masukkan Nama" />
 
           <label>Kelas :</label>
-          <input type="text" name="kelas" value={form.kelas} onChange={handleChange} />
+          <input 
+          type="text" 
+          name="kelas" 
+          value={form.kelas} 
+          onChange={handleChange} 
+          placeholder="Masukkan Kelas"/>
 
           <label>Kartu Perpustakaan:</label>
           <div className={`upload-box ${kartu ? "disabled" : ""}`} onClick={handleUploadClick}>
@@ -188,6 +191,7 @@ function Register() {
               name="password"
               value={form.password}
               onChange={handleChange}
+              placeholder="Masukkan kata sandi"
             />
 
             <span

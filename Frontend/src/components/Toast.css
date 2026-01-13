@@ -1,105 +1,138 @@
 .toast {
   position: fixed;
-  top: 2%;
+  top: 24px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  z-index: 9999;
-}
 
-.toast-bar {
-  width: 6px;
-  border-radius: 12px 0 0 12px;
-}
+  width: 520px;            /* biar memanjang seperti screenshot */
+  max-width: calc(100% - 32px);
 
-.toast-bar-success { background: #22c55e; }
-.toast-bar-error { background: #ef4444; }
-.toast-bar-info { background: #3b82f6; }
-.toast-bar-warning { background: #facc15; }
+  padding: 14px 18px;
+  border-radius: 22px;     /* rounded card (bukan kapsul full) */
+  border: 2px solid rgba(239, 68, 68, 0.22); /* default error-ish, nanti dioverride per type */
 
-.toast-box {
-  position: relative; /* PENTING */
-  background: #fff;
-  border-radius: 0 12px 12px 0;
-  padding: 18px 24px;
-  min-width: 420px;
-  max-width: 90%;
-  display: flex;
-  gap: 14px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-  animation: slideDown 0.25s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* KONTEN */
-.toast-content {
-  flex: 1;
-}
-
-.toast-head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 14px;
+
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  z-index: 9999;
+
+  animation: toastIn .35s ease;
+  overflow: hidden;
 }
 
-.toast-content strong {
-  font-size: 18px;
-}
+/* ---------- warna per tipe (border + color) ---------- */
+.toast-success { color: #22c55e; border-color: rgba(34, 197, 94, 0.22); }
+.toast-error   { color: #ef4444; border-color: rgba(239, 68, 68, 0.22); }
+.toast-info    { color: #3b82f6; border-color: rgba(59, 130, 246, 0.22); }
+.toast-warning { color: #f59e0b; border-color: rgba(245, 158, 11, 0.22); }
 
-.toast-content p {
-  font-size: 16px;
-  color: #444;
-  margin: 0;
-  line-height: 1.35;
-}
-
-/* ICON */
-.toast-icon {
-  width: 26px;
-  height: 26px;
-  padding: 6px;
-  border-radius: 50%;
+/* ---------- icon bulat kiri ---------- */
+.toast-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.toast-bar-success + .toast-box .toast-icon {
-  background: #dcfce7;
-  color: #16a34a;
+.toast-success .toast-icon-wrap { background: rgba(34, 197, 94, 0.12); color: #16a34a; }
+.toast-error   .toast-icon-wrap { background: rgba(239, 68, 68, 0.12); color: #dc2626; }
+.toast-info    .toast-icon-wrap { background: rgba(59, 130, 246, 0.12); color: #2563eb; }
+.toast-warning .toast-icon-wrap { background: rgba(245, 158, 11, 0.14); color: #d97706; }
+
+/* ---------- teks ---------- */
+.toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
 }
 
-.toast-bar-error + .toast-box .toast-icon {
-  background: #fee2e2;
-  color: #dc2626;
+.toast-text strong {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 700;
 }
 
-.toast-bar-info + .toast-box .toast-icon {
-  background: #dbeafe;
-  color: #2563eb;
+.toast-text span {
+  font-size: 14px;
+  color: #6b7280; /* abu soft mirip screenshot */
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.toast-bar-warning + .toast-box .toast-icon {
-  background: #fef9c3;
-  color: #ca8a04;
-}
-
-/* CLOSE */
+/* ---------- close kanan ---------- */
 .toast-close {
-  position: absolute;
-  top: 10px;        /* atur ini */
-  right: 12px;     /* atur ini */
-  background: none;
+  margin-left: auto;
+  background: transparent;
   border: none;
   cursor: pointer;
-  color: #888;
+  color: #9ca3af;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.toast-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #6b7280;
+}
+
+/* ---------- progress tipis bawah (nempel di dalam) ---------- */
+.toast-progress {
+  position: absolute;
+  left: 62px;   /* mulai setelah icon biar mirip screenshot */
+  right: 54px;  /* berhenti sebelum tombol close */
+  bottom: 10px;
+
+  height: 3px;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.35;
+
+  transform-origin: left;
+  animation: toastLife 8s linear forwards;
+}
+
+@keyframes toastLife {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* responsive */
+@media (max-width: 560px) {
+  .toast {
+    width: calc(100% - 32px);
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+  .toast-progress {
+    left: 58px;
+    right: 48px;
+    bottom: 9px;
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import ForgotPass1 from "../components/ForgotPass1.jsx";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
 
@@ -43,11 +43,11 @@ function Login() {
     );
 
     if (!found) {
-      alert("NIS, Nama, atau Password salah!");
+      showToast?.("error", "NIS, Nama, atau Password salah!");
       return;
     }
 
-    alert("Berhasil Masuk!");
+    showToast?.("success", "Berhasil Masuk!");
     navigate("/home");
   }
 
@@ -55,7 +55,14 @@ function Login() {
     <div className="reg-container">
 
       <div className="reg-left">
-        <div className="reg-back" onClick={() => navigate(-1)}>←</div>
+        <button
+          type="button"
+          className="reg-back"
+          onClick={() => navigate(-1)}
+          aria-label="Kembali"
+        >
+          <ArrowLeft size={22} />
+        </button>
 
         <h1 className="reg-title">Masuk</h1>
 
@@ -77,6 +84,7 @@ function Login() {
             name="nama"
             value={form.nama}
             onChange={handleChange}
+            placeholder="Masukkan nama"
           />
 
           <label>Kata Sandi :</label>
@@ -86,6 +94,7 @@ function Login() {
               name="password"
               value={form.password}
               onChange={handleChange}
+              placeholder="Masukkan kata sandi"
             />
 
             <span

@@ -11,18 +11,35 @@ import DetailBuku from "./pages/DetailBuku";
 import KategoriPage from "./pages/KategoriPage";
 import HalamanBaca from "./pages/HalamanBaca";
 import SearchResult from "./pages/searchResult";
+import Toast from "./components/Toast";
+import { useState } from "react";
 
 function App() {
+  const [toast, setToast] = useState(null);
+
+  function showToast(type, message) {
+    setToast({ type, message });
+    setTimeout(() => setToast(null), 8000);
+  }
+
   return (
     <BrowserRouter>
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+
       <Routes>
 
         {/* halaman awal */}
         <Route path="/" element={<Home />} />
 
         {/* halaman auth */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register showToast={showToast} />} />
+        <Route path="/login" element={<Login showToast={showToast} />} />
 
         {/* halaman utama */}
         <Route path="/home" element={<Home />} />
@@ -42,7 +59,7 @@ function App() {
         <Route path="/kategori/:name" element={<KategoriPage />} />
         <Route path="/baca" element={<HalamanBaca />} />
 
-        {/* fallback */}x
+        {/* fallback */}
         <Route path="*" element={<Home />} />
 
       </Routes>

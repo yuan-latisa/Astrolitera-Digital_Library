@@ -30,19 +30,41 @@ html, body {
 
 .reg-back {
   background: #1b2b44;
-  width: 80px;
-  height: 60px;
-  border-radius: 0 0 55px 0;
+
+  /* bikin lebih panjang/besar */
+  width: 92px;
+  height: 92px;
+
+  /* seperempat lingkaran, bukan kotak */
+  border-radius: 0 0 92px 0;
+
   color: white;
-  font-size: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+
   cursor: pointer;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
+
+  border: none;
+  outline: none;
+
+  /* posisiin icon biar enak dilihat (tidak ketarik ke sudut) */
+  padding-right: 14px;
+  padding-bottom: 14px;
+
+  transition: 0.2s;
+}
+
+.reg-back:hover {
+  opacity: 0.92;
+}
+
+.reg-back:active {
+  transform: scale(0.98);
 }
 
 .reg-title {

@@ -1,42 +1,59 @@
-import { X, CheckCircle, XCircle, Info, AlertTriangle } from "lucide-react";
+import {
+  X,
+  CheckCircle,
+  XCircle,
+  Info,
+  AlertTriangle
+} from "lucide-react";
 import "./Toast.css";
 
-const Toast = ({ type = "error", message, onClose }) => {
+export default function Toast({
+  type = "info",
+  message,
+  onClose,
+  loading = false
+}) {
   const Icon =
     type === "success"
       ? CheckCircle
       : type === "error"
       ? XCircle
-      : type === "info"
-      ? Info
-      : AlertTriangle;
+      : type === "warning"
+      ? AlertTriangle
+      : Info;
+
+  const title =
+    type === "success"
+      ? "Success"
+      : type === "error"
+      ? "Error"
+      : type === "warning"
+      ? "Warning"
+      : "Info";
 
   return (
-    <div className="toast">
-      {/* GARIS KIRI */}
-      <div className={`toast-bar toast-bar-${type}`} />
-
-      <div className="toast-box">
-        <div className="toast-content">
-          <div className="toast-head">
-            <Icon size={18} className="toast-icon" />
-            <strong>
-              {type === "success" && "Success"}
-              {type === "error" && "Error"}
-              {type === "info" && "Info"}
-              {type === "warning" && "Warning"}
-            </strong>
-          </div>
-
-          <p>{message}</p>
-        </div>
-
-        <button className="toast-close" onClick={onClose}>
-          <X size={16} />
-        </button>
+    <div
+      className={`toast toast-${type} ${loading ? "toast-loading" : ""}`}
+      role="status"
+      aria-live="polite"
+    >
+      <div className="toast-icon-wrap">
+        <Icon size={18} />
       </div>
+
+      <div className="toast-text">
+        <strong>{title}</strong>
+        <span>{message}</span>
+      </div>
+
+      <button
+        className="toast-close"
+        onClick={onClose}
+        disabled={loading}
+        aria-label="Close"
+      >
+        <X size={16} />
+      </button>
     </div>
   );
-};
-
-export default Toast;
+}
