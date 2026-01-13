@@ -102,7 +102,7 @@ function Register({ showToast }) {
       localStorage.setItem("users", JSON.stringify(users));
 
       // Tampilkan popup pending (admin akan verifikasi)
-      setPopupType("pending");
+      setPopupType("error");
     };
 
     reader.readAsDataURL(kartu);

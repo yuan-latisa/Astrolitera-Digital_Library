@@ -98,3 +98,26 @@
 .book-row .book-card {
   min-width: 150px !important;
 }
+
+.book-row {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.book-row img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none; /* drag gak “ketarik” gambar, klik tetap di card */
+}
+
+/* biar class visible beneran jalan */
+.lihat-semua-scroll {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.lihat-semua-scroll.visible {
+  opacity: 0.7;
+  pointer-events: auto;
+}
