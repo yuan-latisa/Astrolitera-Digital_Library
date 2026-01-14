@@ -5,7 +5,7 @@ import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({showToast}) {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -46,9 +46,10 @@ function Login() {
       showToast?.("error", "NIS, Nama, atau Password salah!");
       return;
     }
-
+    if(found){
     showToast?.("success", "Berhasil Masuk!");
     navigate("/home");
+    }
   }
 
   return (

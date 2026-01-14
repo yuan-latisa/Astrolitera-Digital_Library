@@ -31,7 +31,7 @@ const PopupStatus = ({ type }) => {
       link: "/register",
     },
   };
-
+  
   const c = data[type];
   if (!c) return null;
 

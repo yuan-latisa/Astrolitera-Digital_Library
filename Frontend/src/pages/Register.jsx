@@ -104,8 +104,9 @@ function Register({ showToast }) {
       // Tampilkan popup pending (admin akan verifikasi)
       setPopupType("error");
     };
-
-    reader.readAsDataURL(kartu);
+    
+      reader.readAsDataURL(kartu);
+      // navigate("/login");
   }
 
   return (
