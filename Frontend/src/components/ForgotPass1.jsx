@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ForgotPass1.css";
-import lupaImg from "../assets/forgot.png";   // ganti sesuai nama file gambarmu
+import lupaImg from "../assets/forgot.png";
 
 export default function ForgotPass1({ onClose }) {
 

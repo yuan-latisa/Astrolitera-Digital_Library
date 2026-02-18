@@ -87,7 +87,7 @@ function BookRow({ title, books }) {
             view={book.view}
             genre={book.genre}
             sinopsis={book.sinopsis}
-            disableClick={dragging}   // ✅ klik mati saat drag
+            disableClick={dragging}
           />
         ))}
 

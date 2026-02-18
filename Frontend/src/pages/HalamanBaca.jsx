@@ -1,7 +1,7 @@
 import React from "react";
 import BookReader from "../components/BookReader";
 
-function Favorit() {
+function HalamanBaca() {
   return (
     <div className="page-container">
       <BookReader/>
@@ -9,4 +9,4 @@ function Favorit() {
   );
 }
 
-export default Favorit;
+export default HalamanBaca;

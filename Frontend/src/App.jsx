@@ -47,7 +47,7 @@ function App() {
         {/* halaman dari footer */}
         <Route path="/about" element={<Tentang />} />
         <Route path="/contact" element={<Kontak />} />
-        <Route path="/privacy policy" element={<Kebijakan />} />
+        <Route path="/privacypolicy" element={<Kebijakan />} />
 
         {/* halaman dari sidebar */}
         <Route path="/favorite" element={<Favorit />} />

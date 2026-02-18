@@ -210,7 +210,6 @@
   height: auto;
 }
 
-/* bottom controls */
 .viewer-bottom {
   width: calc(100% - 40px);
   display: flex;
@@ -262,7 +261,6 @@
 
 }
 
-/* Custom scrollbar for the book reader (thumb sidebar and main canvas) */
 .thumb-sidebar,
 .canvas-wrap {
   scrollbar-width: thin; 

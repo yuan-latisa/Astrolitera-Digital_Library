@@ -3,13 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import "./KategoriPage.css";
 import { ArrowLeft, LayoutGrid, StretchHorizontal } from "lucide-react";
-
 import cover1 from "../assets/cover1.jpg";
 import cover2 from "../assets/examplecover.jpg";
 
 export default function KategoriPage() {
 
-  const { nama } = useParams();
+  const { name: nama } = useParams();
   const navigate = useNavigate();
 
   const [viewMode, setViewMode] = useState("grid");

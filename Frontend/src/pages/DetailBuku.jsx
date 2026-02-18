@@ -15,7 +15,7 @@ import cover2 from "../assets/cover2.png";
 
 function DetailBuku() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { title } = useParams();
   const book = {
     title: "Hell Screen",
     author: "Ryūnosuke Akutagawa",
@@ -37,9 +37,7 @@ function DetailBuku() {
 
   const [tab, setTab] = useState("sinopsis");
 
-  // ================================
-  // 🟦 LOCAL STORAGE MANAGEMENT
-  // ================================
+  //LOCAL STORAGE MANAGEMENT
   const storageKey = "ulasan-" + book.title.replace(/\s+/g, "-").toLowerCase();
 
   const loadUlasan = () => {
@@ -73,20 +71,16 @@ function DetailBuku() {
     },
   ];
 
-  // ⬅ PENTING! LOAD DATA SEKALI DI useState (BIAR TIDAK KE-RESET)
   const [ulasanList, setUlasanList] = useState(() => {
     const saved = loadUlasan();
     return saved || defaultUlasan;
   });
 
-  // SAVE KE LOCAL STORAGE SETIAP ADA PERUBAHAN
   useEffect(() => {
     saveUlasan(ulasanList);
   }, [ulasanList]);
 
-  // ================================
-  // 🟦 INPUT ULASAN PENGGUNA
-  // ================================
+  // INPUT ULASAN PENGGUNA
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState("");
 
@@ -107,9 +101,7 @@ function DetailBuku() {
     setNewComment("");
   };
 
-  // ================================
-  // 🟦 BALASAN
-  // ================================
+  //BALASAN
   const [replyOpen, setReplyOpen] = useState(null);
   const [replyText, setReplyText] = useState("");
 
@@ -126,9 +118,7 @@ function DetailBuku() {
     setReplyText("");
   };
 
-  // ================================
-  // 🟦 LIKE TOGGLE
-  // ================================
+  //LIKE TOGGLE
   const handleLike = (index) => {
     const updated = [...ulasanList];
     const item = updated[index];
@@ -144,17 +134,13 @@ function DetailBuku() {
     setUlasanList(updated);
   };
 
-  // ================================
-  // 🟦 HAPUS ULASAN PENGGUNA
-  // ================================
+  // HAPUS ULASAN PENGGUNA
   const deleteUlasan = (index) => {
     const updated = ulasanList.filter((_, i) => i !== index);
     setUlasanList(updated);
   };
 
-  // ================================
-  // 🟨 BOOKMARK STATE + NOTIFIKASI
-  // ================================
+  //BOOKMARK STATE + NOTIFIKASI
   const [bookmarked, setBookmarked] = useState(false);
   const [toast, setToast] = useState(null);
 
@@ -173,12 +159,10 @@ function DetailBuku() {
         : "Dihapus dari Bookmark"
     );
   };
-  // ================================
-  // 🟦 RENDER
-  // ================================
+
   return (
     <div className="detail-container">
-      { toast && <div className="toast-notif">{toast}</div> }
+      {toast && <div className="toast-notif">{toast}</div>}
       <ArrowLeft className="back-btn" onClick={() => navigate(-1)} />
 
       {/* BAGIAN ATAS */}
@@ -241,16 +225,10 @@ function DetailBuku() {
       {/* CONTENT BOX */}
       <div className={`content-box ${tab === "ulasan" ? "ulasan-mode" : "normal-mode"}`}>
 
-        {/* ======================= */}
-        {/* SINOPSIS */}
-        {/* ======================= */}
         {tab === "sinopsis" && (
           <p className="sinopsis">{book.sinopsis}</p>
         )}
 
-        {/* ======================= */}
-        {/* INFO */}
-        {/* ======================= */}
         {tab === "info" && (
           <div className="info-grid">
             <div><strong>Bahasa:</strong><br />{book.info.bahasa}</div>
@@ -262,13 +240,8 @@ function DetailBuku() {
           </div>
         )}
 
-        {/* ======================= */}
-        {/* ULASAN */}
-        {/* ======================= */}
         {tab === "ulasan" && (
           <div className="ulasan-wrapper">
-
-            {/* FORM INPUT ULASAN */}
             <div className="ulasan-input-box">
               <p className="label-ulasan">Berikan Ulasan Anda</p>
 
@@ -318,7 +291,6 @@ function DetailBuku() {
 
                     <div className="ulasan-actions">
 
-                      {/* LIKE */}
                       <span className="like" onClick={() => handleLike(index)}>
                         <ThumbsUp
                           size={16}
@@ -328,7 +300,6 @@ function DetailBuku() {
                         {u.like}
                       </span>
 
-                      {/* BALAS */}
                       <span
                         className="balasan-toggle"
                         onClick={() =>
@@ -338,7 +309,6 @@ function DetailBuku() {
                         {u.balasan.length} Balasan
                       </span>
 
-                      {/* DELETE */}
                       {u.nama === "Pengguna" && (
                         <span className="hapus-btn" onClick={() => deleteUlasan(index)}>
                           <Trash2 size={16} color="#ff4444" />
@@ -348,7 +318,6 @@ function DetailBuku() {
                   </div>
                 </div>
 
-                {/* BALASAN */}
                 {replyOpen === index && (
                   <div className="balasan-list">
                     {u.balasan.map((b, i) => (
