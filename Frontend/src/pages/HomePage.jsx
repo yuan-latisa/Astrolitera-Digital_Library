@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
-import "./HomePage.css"; 
+import "./HomePage.css";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import bannerImg from "../assets/banner.png";
@@ -7,7 +8,9 @@ import BookRow from "../components/BookRow";
 import { books, toCardBook } from "../data/Books";
 
 function HomePage() {
+  const navigate = useNavigate();
   const [setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { featured, popular, bestSellers, novels } = useMemo(() => {
     const featured = books
@@ -36,6 +39,13 @@ function HomePage() {
         showSearch={true}
         showMenu={true}
         onMenuClick={() => setMenuOpen(true)}
+        searchValue={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Ketik judul buku yang kamu cari"
+        onSearchSubmit={() => {
+          const q = (searchQuery || "").trim();
+          navigate(`/search?q=${encodeURIComponent(q)}`);
+        }}
       />
       <div className="home-container">
 

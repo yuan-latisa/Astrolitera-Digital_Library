@@ -6,8 +6,21 @@ function Header({
   showMenu = true,
   showBack = false,
   onBack,
-  onMenuClick
+  onMenuClick,
+  searchValue,
+  onSearchChange,
+  onSearchSubmit,
+  searchPlaceholder = "Search books...",
 }) {
+
+  const isControlled = typeof searchValue === "string" && typeof onSearchChange === "function";
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && typeof onSearchSubmit === "function") {
+      onSearchSubmit();
+    }
+  };
+
   return (
     <header className="header">
       <div className="header-left">
@@ -30,7 +43,13 @@ function Header({
         {showSearch && (
           <div className="search-box">
             <Search size={18} className="search-icon" />
-            <input type="text" placeholder="Search books..." />
+            <input
+              type="text"
+              placeholder={searchPlaceholder}
+              value={isControlled ? searchValue : undefined}
+              onChange={isControlled ? (e) => onSearchChange(e.target.value) : undefined}
+              onKeyDown={handleKeyDown}
+            />
           </div>
         )}
 
