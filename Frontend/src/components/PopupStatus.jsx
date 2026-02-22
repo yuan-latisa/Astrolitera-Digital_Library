@@ -53,7 +53,7 @@ const PopupStatus = ({ type }) => {
         </Link>
 
         {type === "error" && (
-          <Link to="/guest" className="popup-guest">
+          <Link to={{ pathname: "/home" }} state={{ guest: true }} className="popup-guest">
             lanjut sebagai tamu
           </Link>
         )}

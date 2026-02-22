@@ -1,40 +1,42 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import BookCard from "../components/BookCard";
+import React, { useMemo, useState } from "react";
 import "./KategoriPage.css";
+import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, LayoutGrid, StretchHorizontal } from "lucide-react";
-import cover1 from "../assets/cover1.jpg";
-import cover2 from "../assets/examplecover.jpg";
+import BookCard from "../components/BookCard";
+import { books as allBooks, toCardBook } from "../data/Books";
 
 export default function KategoriPage() {
-
   const { name: nama } = useParams();
   const navigate = useNavigate();
 
   const [viewMode, setViewMode] = useState("grid");
 
-  const books = [
-    { id: 1, cover: cover1, title: "Meow", author: "Sam Austen", rating: 5 },
-    { id: 2, cover: cover2, title: "Pergi", author: "Tere Liye", rating: 4.5 },
-    { id: 3, cover: cover2, title: "Pergi", author: "Tere Liye", rating: 4.5 },
-    { id: 4, cover: cover2, title: "Pergi", author: "Tere Liye", rating: 4.5 },
-  ];
+  const categoryKey = useMemo(() => {
+    return decodeURIComponent(nama || "").replace(/-/g, " ").trim().toLowerCase();
+  }, [nama]);
+
+  const books = useMemo(() => {
+    const filtered = allBooks.filter((b) => {
+      const cat = (b.category || "").trim().toLowerCase();
+      return cat === categoryKey;
+    });
+
+    const list = filtered.length ? filtered : allBooks;
+
+    return list.map(toCardBook);
+  }, [categoryKey]);
 
   return (
     <div className="kategori-container">
-
       {/* HEADER */}
       <div className="kategori-header">
-
         <button className="back-button" onClick={() => navigate(-1)}>
           <ArrowLeft size={28} strokeWidth={2.2} />
         </button>
 
         <p className="rekomendasi-text">Rekomendasi</p>
 
-        <h2 className="kategori-title">
-          {(nama ?? "").replace(/-/g, " ")}
-        </h2>
+        <h2 className="kategori-title">{categoryKey}</h2>
 
         <div className="view-buttons">
           <LayoutGrid
@@ -49,7 +51,6 @@ export default function KategoriPage() {
             onClick={() => setViewMode("list")}
           />
         </div>
-
       </div>
 
       {/* CONTENT */}
@@ -59,12 +60,9 @@ export default function KategoriPage() {
             key={book.id}
             {...book}
             view={viewMode}
-            genre={["Komik", "Fantasi"]}
-            sinopsis="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore..."
           />
         ))}
       </div>
-
     </div>
   );
 }

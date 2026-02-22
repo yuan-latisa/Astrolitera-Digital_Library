@@ -11,18 +11,21 @@ function BookCard({
   rating,
   view,
   genre,
-  sinopsis,
+  synopsis,
   disableClick = false,
 }) {
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    if (disableClick) return;
+    navigate(`/book/${id}`);
+  };
+
   return (
     <div
       className={`book-card ${view === "list" ? "list-mode" : "grid"}`}
-      onClick={() => {
-        if (disableClick) return;
-        navigate(`/book/${title.toLowerCase().replace(/ /g, "-")}`);
-      }}
+      onClick={handleClick}
+      style={{ cursor: disableClick ? "default" : "pointer" }}
     >
       <img src={cover} alt={title} className="book-cover" />
 
@@ -44,11 +47,11 @@ function BookCard({
           <Star size={15} fill="#f5c518" color="#f5c518" />
           <span>{rating}/5</span>
         </div>
+        </div>
 
-        {view === "list" && sinopsis && (
-          <p className="sinopsis">{sinopsis.slice(0, 140)}...</p>
+        {view === "list" && synopsis && (
+          <p className="sinopsis">{synopsis}</p>
         )}
-      </div>
     </div>
   );
 }

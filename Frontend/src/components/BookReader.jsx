@@ -8,7 +8,7 @@ import defaultPdf from "../assets/Hell_Screen.pdf";
 
 GlobalWorkerOptions.workerSrc = pdfWorker;
 
-export default function BookReader({ pdfSrc = defaultPdf }) {
+export default function BookReader({ pdfSrc = defaultPdf, title }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const thumbsRef = useRef(null);

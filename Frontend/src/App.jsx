@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/HomePage";
@@ -10,9 +11,9 @@ import Pengaturan from "./pages/Pengaturan";
 import DetailBuku from "./pages/DetailBuku";
 import KategoriPage from "./pages/KategoriPage";
 import HalamanBaca from "./pages/HalamanBaca";
-import SearchResult from "./pages/searchResult";
+import SearchResult from "./pages/SearchResult";
 import Toast from "./components/Toast";
-import { useState } from "react";
+import ViewAllPage from "./pages/ViewAllPage";
 
 function App() {
   const [toast, setToast] = useState(null);
@@ -47,20 +48,20 @@ function App() {
         {/* halaman dari footer */}
         <Route path="/about" element={<Tentang />} />
         <Route path="/contact" element={<Kontak />} />
-        <Route path="/privacypolicy" element={<Kebijakan />} />
+        <Route path="/privacyPolicy" element={<Kebijakan />} />
 
         {/* halaman dari sidebar */}
         <Route path="/favorite" element={<Favorit />} />
         <Route path="/settings" element={<Pengaturan />} />
-
         <Route path="/search" element={<SearchResult />} />
-
-        <Route path="/book/:title" element={<DetailBuku />} />
+        <Route path="/book/:id" element={<DetailBuku />} />
         <Route path="/kategori/:name" element={<KategoriPage />} />
-        <Route path="/baca" element={<HalamanBaca />} />
+        <Route path="/baca/:id" element={<HalamanBaca />} />
 
         {/* fallback */}
         <Route path="*" element={<Home />} />
+
+        <Route path="/view-all" element={<ViewAllPage />} />
 
       </Routes>
     </BrowserRouter>

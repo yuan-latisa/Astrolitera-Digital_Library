@@ -1,39 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./DetailBuku.css";
-import {
-  ArrowLeft,
-  Star,
-  Bookmark,
-  BookOpen,
-  Info,
-  MessageSquare,
-  ThumbsUp,
-  Trash2,
-} from "lucide-react";
+import { ArrowLeft, Star, Bookmark, BookOpen, Info, MessageSquare, ThumbsUp, Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import cover2 from "../assets/cover2.png";
+import { books } from "../data/Books";
+import Header from "../components/Header";
 
 function DetailBuku() {
   const navigate = useNavigate();
-  const { title } = useParams();
-  const book = {
-    title: "Hell Screen",
-    author: "Ryūnosuke Akutagawa",
-    cover: cover2,
-    rating: 4.2,
-    status: "Tidak Tersedia",
-    genre: ["Fiksi Horror", "Cerita Pendek", "Klasik Jepang"],
-    sinopsis:
-      "Akutagawa's deceptively simple tale of Yoshihide, 'The Greatest Painter in Japan.'' Hired by the Grand Lord to put the underworld on canvas, the single-minded painter fulfills his commission with startling, yet understated results.",
-    info: {
-      bahasa: "Inggris",
-      penerbit: "Disruptive Publishing, Inc",
-      halaman: "52 halaman",
-      tanggal: "2010",
-      penulis: "Ryūnosuke Akutagawa",
-      format: "Pdf",
-    },
-  };
+  const { id } = useParams();
+  const book =
+    books.find((b) => b.id === Number(id)) || books[0];
 
   const [tab, setTab] = useState("sinopsis");
 
@@ -226,20 +202,19 @@ function DetailBuku() {
       <div className={`content-box ${tab === "ulasan" ? "ulasan-mode" : "normal-mode"}`}>
 
         {tab === "sinopsis" && (
-          <p className="sinopsis">{book.sinopsis}</p>
+          <p className="sinopsis">{book.synopsis}</p>
         )}
 
         {tab === "info" && (
           <div className="info-grid">
-            <div><strong>Bahasa:</strong><br />{book.info.bahasa}</div>
-            <div><strong>Tanggal Rilis:</strong><br />{book.info.tanggal}</div>
-            <div><strong>Penerbit:</strong><br />{book.info.penerbit}</div>
-            <div><strong>Penulis:</strong><br />{book.info.penulis}</div>
-            <div><strong>Jumlah Halaman:</strong><br />{book.info.halaman}</div>
-            <div><strong>Format:</strong><br />{book.info.format}</div>
+            <div><strong>Bahasa:</strong><br />{book.language}</div>
+            <div><strong>Tanggal Rilis:</strong><br />{book.publicationDate}</div>
+            <div><strong>Penerbit:</strong><br />{book.publisher}</div>
+            <div><strong>Penulis:</strong><br />{book.author}</div>
+            <div><strong>Jumlah Halaman:</strong><br />{book.page}</div>
+            <div><strong>Format:</strong><br />{book.format}</div>
           </div>
         )}
-
         {tab === "ulasan" && (
           <div className="ulasan-wrapper">
             <div className="ulasan-input-box">
@@ -346,9 +321,9 @@ function DetailBuku() {
           </div>
         )}
 
-        {/* BACA SEKARANG (hilang di tab ulasan) */}
+        {/* BACA SEKARANG */}
         {tab !== "ulasan" && (
-          <button className="read-btn" onClick={() => navigate("/baca")}>
+          <button className="read-btn" onClick={() => navigate(`/baca/${book.id}`)}>
             Baca Sekarang
           </button>
         )}

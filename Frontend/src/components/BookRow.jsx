@@ -20,6 +20,7 @@ function BookRow({ title, books }) {
     const el = rowRef.current;
     if (!el) return;
     setRowHasScroll(el.scrollWidth > el.clientWidth);
+    setShowMore(false);
   }, [books]);
 
   const handleMouseDown = (e) => {
@@ -51,14 +52,16 @@ function BookRow({ title, books }) {
 
   const handleScroll = () => {
     const el = rowRef.current;
+    if (!el) return;
+
     const atRight =
       Math.ceil(el.scrollLeft + el.clientWidth) >= el.scrollWidth - 2;
+
     setShowMore(atRight);
   };
 
-  const goToCategory = () => {
-    const formatted = title.toLowerCase().replace(/ /g, "-");
-    navigate(`/kategori/${formatted}`);
+  const goToViewAll = () => {
+    navigate("/view-all", { state: { title, books } });
   };
 
   return (
@@ -76,26 +79,17 @@ function BookRow({ title, books }) {
         onMouseLeave={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {books.map((book, index) => (
+        {books.map((book) => (
           <BookCard
-            key={index}
-            id={book.id}
-            cover={book.cover}
-            title={book.title}
-            author={book.author}
-            rating={book.rating}
-            view={book.view}
-            genre={book.genre}
-            sinopsis={book.sinopsis}
+            key={book.id}
+            {...book}
             disableClick={dragging}
           />
         ))}
 
         <p
-          className={`lihat-semua-scroll ${
-            rowHasScroll && showMore ? "visible" : ""
-          }`}
-          onClick={goToCategory}
+          className={`lihat-semua-scroll ${rowHasScroll && showMore ? "visible" : ""}`}
+          onClick={goToViewAll}
         >
           Lihat Semua →
         </p>

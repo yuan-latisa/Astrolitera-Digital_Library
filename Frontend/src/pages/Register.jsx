@@ -4,6 +4,7 @@ import { Camera, X, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
 import PopupStatus from "../components/PopupStatus";
+import home from "./HomePage.jsx";
 
 function Register({ showToast }) {
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ function Register({ showToast }) {
       localStorage.setItem("users", JSON.stringify(users));
 
       // Tampilkan popup pending (admin akan verifikasi)
-      setPopupType("error");
+      setPopupType("pending");
     };
     
       reader.readAsDataURL(kartu);
@@ -206,7 +207,7 @@ function Register({ showToast }) {
         </form>
 
         <div className="reg-links">
-          <p className="as-guest" onClick={() => navigate("./HomePage.jsx")}>Lanjut Sebagai Tamu</p>
+          <p className="as-guest" onClick={() => navigate(home)}>Lanjut Sebagai Tamu</p>
           <p className="login-text">
             Sudah Punya Akun?{" "}
             <span onClick={() => navigate("/login")} className="login-link">

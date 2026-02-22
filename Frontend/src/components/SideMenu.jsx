@@ -27,12 +27,12 @@ function SideMenu({ open, onClose }) {
 
                     <li onClick={onClose}>
                         <Heart size={20} />
-                        <Link to="/favorit">Favorit</Link>
+                        <Link to="/favorite">Favorit</Link>
                     </li>
 
                     <li onClick={onClose}>
                         <Settings size={20} />
-                        <Link to="/pengaturan">Pengaturan</Link>
+                        <Link to="/settings">Pengaturan</Link>
                     </li>
                 </ul>
 
