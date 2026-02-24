@@ -8,6 +8,7 @@ import Kontak from "./pages/Kontak";
 import Kebijakan from "./pages/Kebijakan";
 import Favorit from "./pages/Favorit";
 import Pengaturan from "./pages/Pengaturan";
+import Aktivitas from "./pages/Aktivitas";
 import DetailBuku from "./pages/DetailBuku";
 import KategoriPage from "./pages/KategoriPage";
 import HalamanBaca from "./pages/HalamanBaca";
@@ -53,6 +54,9 @@ function App() {
         {/* halaman dari sidebar */}
         <Route path="/favorite" element={<Favorit />} />
         <Route path="/settings" element={<Pengaturan />} />
+        <Route path="/pengaturan" element={<Pengaturan />} />
+        <Route path="/aktivitas" element={<Aktivitas />} />
+        <Route path="/favorit" element={<Favorit />} />
         <Route path="/search" element={<SearchResult />} />
         <Route path="/book/:id" element={<DetailBuku />} />
         <Route path="/kategori/:name" element={<KategoriPage />} />

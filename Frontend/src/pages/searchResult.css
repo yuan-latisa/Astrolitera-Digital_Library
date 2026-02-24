@@ -1,8 +1,10 @@
+/* ===== Page wrapper ===== */
 .search-page {
   min-height: 100vh;
   background: #f3f4f6;
 }
 
+/* ===== Header ===== */
 .search-topbar {
   background: linear-gradient(135deg, #1f2b3a, #243447);
   padding: 14px 18px;
@@ -62,7 +64,7 @@
   color: rgba(255,255,255,0.75);
 }
 
-/* ===== Controls (dipisah dari header) ===== */
+/* ===== Controls bar ===== */
 .search-controls {
   display: flex;
   align-items: center;
@@ -81,7 +83,6 @@
   border: 1px solid rgba(0,0,0,0.08);
 }
 
-/* tombol grid/list */
 .search-view-btn {
   width: 38px;
   height: 34px;
@@ -123,100 +124,92 @@
   background: #fbbf24;
 }
 
-/* ===== Body layout (filter panel + content) ===== */
+/* ===== Body layout ===== */
 .search-body {
   display: flex;
   gap: 18px;
   padding: 0 18px 18px;
+  align-items: flex-start;
 }
 
+/* Sidebar filter panel */
 .search-filter-panel {
-  width: 260px;
+  width: 300px;
   min-height: 70vh;
-  background: #223043;
-  border-radius: 12px;
-  padding: 14px;
+  background: #3f556b; /* match desain kamu */
+  border-radius: 0;
+  padding: 18px 16px;
   color: white;
 }
 
-\.filter-group \{
-  margin-bottom: 14px;
-\}
+/* Accordion group */
+.filter-group {
+  margin-bottom: 22px;
+}
+
 .filter-header {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 10px 10px;
-  border-radius: 10px;
+  padding: 10px 0;
   border: none;
-  background: rgba(255,255,255,0.06);
+  background: transparent;
   color: white;
   cursor: pointer;
-  font-weight: 700;
-  font-size: 13px;
-}
-
-.filter-header:hover {
-  background: rgba(255,255,255,0.10);
+  font-weight: 800;
+  font-size: 18px;
 }
 
 .filter-chevron {
   transition: transform 180ms ease;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .filter-chevron.open {
   transform: rotate(180deg);
 }
 
+/* Options container */
 .filter-body {
-  margin-top: 10px;
+  margin-top: 14px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.filter-body--text {
   gap: 8px;
 }
 
-
-.filter-title {
-  font-weight: 700;
-  font-size: 13px;
-  opacity: 0.9;
-  margin-bottom: 10px;
-}
-
-.filter-options {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.filter-chip {
-  text-align: left;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.06);
+/* Pills like screenshot */
+.filter-pill {
+  border: 1.5px solid rgba(255,255,255,0.75);
+  background: transparent;
   color: white;
+  border-radius: 14px;
+  padding: 10px 14px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.filter-chip.active {
-  background: rgba(251, 191, 36, 0.95);
-  color: #111827;
-  border-color: rgba(0,0,0,0.15);
+.filter-pill.active {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.95);
 }
 
 .filter-placeholder {
-  opacity: 0.7;
+  opacity: 0.8;
   font-size: 13px;
+  line-height: 1.4;
 }
 
+/* Results area */
 .search-content {
   flex: 1;
   padding: 18px 4px;
+  min-width: 0;
 }
 
 .search-empty {
@@ -225,9 +218,9 @@
   color: #374151;
 }
 
+/* Mobile */
 @media (max-width: 640px) {
   .search-title { display: none; }
-  .search-sort { margin-left: 0; flex: 1; justify-content: flex-end; }
   .search-body { flex-direction: column; }
   .search-filter-panel { width: 100%; }
 }

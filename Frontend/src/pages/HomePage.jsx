@@ -3,13 +3,14 @@ import "./HomePage.css";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SideMenu from "../components/SideMenu";
 import bannerImg from "../assets/banner.png";
 import BookRow from "../components/BookRow";
 import { books, toCardBook } from "../data/Books";
 
 function HomePage() {
   const navigate = useNavigate();
-  const [setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const { featured, popular, bestSellers, novels } = useMemo(() => {
@@ -47,6 +48,7 @@ function HomePage() {
           navigate(`/search?q=${encodeURIComponent(q)}`);
         }}
       />
+      <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
       <div className="home-container">
 
         <div className="banner">

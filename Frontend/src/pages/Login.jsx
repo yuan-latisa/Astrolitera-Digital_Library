@@ -48,6 +48,7 @@ function Login({showToast}) {
     }
     if(found){
     showToast?.("success", "Berhasil Masuk!");
+    try { localStorage.setItem("sessionUser", JSON.stringify(found)); } catch (e) {}
     navigate("/home");
     }
   }
