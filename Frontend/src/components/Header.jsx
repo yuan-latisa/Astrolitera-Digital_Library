@@ -1,5 +1,6 @@
 import { Search, Menu, ArrowLeft } from "lucide-react";
 import logoImg from "../assets/logo.png";
+import "./Header.css";
 
 function Header({
   showSearch = true,

@@ -29,29 +29,33 @@ function BookCard({
     >
       <img src={cover} alt={title} className="book-cover" />
 
-      <div className="book-info">
-        <h3 className="book-title">{title}</h3>
-        <p className="book-author">By {author}</p>
+      {/*
+        Untuk list mode, bungkus konten kanan (info + sinopsis) dalam 1 container
+        biar alignment rapi dan tidak "melayang".
+      */}
+      <div className="book-content">
+        <div className="book-info">
+          <h3 className="book-title">{title}</h3>
+          <p className="book-author">By {author}</p>
 
-        {view === "list" && genre && (
-          <div className="genre-tags">
-            {genre.map((g, i) => (
-              <span className="genre-tag" key={i}>
-                {g}
-              </span>
-            ))}
+          {view === "list" && genre && (
+            <div className="genre-tags">
+              {genre.map((g, i) => (
+                <span className="genre-tag" key={i}>
+                  {g}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="rating-box list-rating">
+            <Star size={15} fill="#f5c518" color="#f5c518" />
+            <span>{rating}/5</span>
           </div>
-        )}
-
-        <div className="rating-box list-rating">
-          <Star size={15} fill="#f5c518" color="#f5c518" />
-          <span>{rating}/5</span>
-        </div>
         </div>
 
-        {view === "list" && synopsis && (
-          <p className="sinopsis">{synopsis}</p>
-        )}
+        {view === "list" && synopsis && <p className="sinopsis">{synopsis}</p>}
+      </div>
     </div>
   );
 }

@@ -40,7 +40,7 @@
 
 .book-card.list-mode .sinopsis {
   text-align: left;
-  margin-left: -8px;
+  margin-left: -100px;
 }
 
 .bookmark-icon-list {
@@ -67,7 +67,7 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .genre-tag {
@@ -91,6 +91,7 @@
   font-size: 13px;
   opacity: .85;
   margin-top: 6px;
+  margin-right: px;
   line-height: 1.5;
 }
 
@@ -157,4 +158,57 @@
 .book-card.list-mode .book-cover {
   width: 120px;
   height: 160px;
+}
+
+/* ==========================
+   LIST MODE FIX (RAPIH)
+   - Hindari layout yang "ngelompat" dengan grid auto-placement
+   - Pakai flex: cover kiri, konten kanan (info + sinopsis) sejajar
+   ========================== */
+
+/* container kanan (info + sinopsis) */
+.book-content {
+  min-width: 0; /* penting biar text ellipsis/line-clamp jalan */
+}
+
+.book-card.list-mode {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  padding: 18px;
+  border-radius: 14px;
+  align-items: flex-start;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.book-card.list-mode .book-cover {
+  flex: 0 0 auto;
+  width: 120px;
+  height: 160px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.book-card.list-mode .book-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.book-card.list-mode .book-info {
+  gap: 6px;
+}
+
+.book-card.list-mode .sinopsis {
+  margin: 0;
+  text-align: left;
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
 }

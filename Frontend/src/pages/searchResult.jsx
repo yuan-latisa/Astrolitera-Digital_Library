@@ -172,7 +172,7 @@ export default function SearchResult() {
           <div className="search-title">Hasil Pencarian</div>
 
           <div className="search-input-wrap">
-            <Search size={18} />
+            <Search size={18} className="search-icon"/>
             <input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
@@ -191,7 +191,7 @@ export default function SearchResult() {
             onClick={() => setViewMode("grid")}
             aria-label="Grid"
           >
-            <LayoutGrid size={18} />
+            <LayoutGrid size={26} />
           </button>
           <button
             type="button"
@@ -199,7 +199,7 @@ export default function SearchResult() {
             onClick={() => setViewMode("list")}
             aria-label="List"
           >
-            <StretchHorizontal size={18} />
+            <StretchHorizontal size={26} />
           </button>
         </div>
 

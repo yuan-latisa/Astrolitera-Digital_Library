@@ -7,10 +7,10 @@
 
 .back-btn {
     position: absolute;
-    top: 25px;       /* geser dari atas */
-    left: 25px;      /* geser dari kiri */
+    top: 25px;
+    left: 25px;
     cursor: pointer;
-    z-index: 999;    /* biar selalu di atas elemen lain */
+    z-index: 999;
 }
 
 .detail-top {
@@ -105,7 +105,7 @@
   transition: 0.2s;
   color: #222;
   position: relative;
-  margin-top: -180px;
+  margin-top: -165px;
   margin-left: 20px;
   z-index: 3;
   font-size: px;
@@ -120,7 +120,7 @@
   background: #f1c232;
   border-color: #f1c232;
   color: #ffffff;
-  margin-top: -188px;
+  margin-top: -175px;
 }
 
 .tab-btn.active svg {
@@ -135,25 +135,25 @@
     background: #162b45;
     color: white;
     position: relative;
-    width: 80%;
-    margin-left: 307px;
+    width: 83%;
+    margin-left: 300px;
     border-radius: 0;
     z-index: 1;
 }
 
 .normal-mode {
     padding: 60px;
-    margin-top: -220px;    /* Sesuaikan biar pas */
-    min-height: 405px;     /* Tinggi gabungan sinopsis/info */
+    margin-top: -200px;    /* Sesuaikan biar pas */
+    min-height: 473px;     /* Tinggi gabungan sinopsis/info */
 }
 
 .ulasan-mode {
     padding: 30px 50px 25px;
-    margin-top: -220px;    /* Turunin sedikit biar ulasan tidak kepotong */
+    margin-top: -200px;    /* Turunin sedikit biar ulasan tidak kepotong */
     min-height: 10px;     /* Tinggi lebih besar untuk daftar ulasan */
     overflow-y: visible;   /* Biar tidak muncul scrollbar */
     padding-top: px;
-    padding-bottom: 0px;
+    padding-bottom: 68px;
 }
 
 .sinopsis {

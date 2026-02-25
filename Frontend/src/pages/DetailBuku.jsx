@@ -3,7 +3,6 @@ import "./DetailBuku.css";
 import { ArrowLeft, Star, Bookmark, BookOpen, Info, MessageSquare, ThumbsUp, Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { books } from "../data/Books";
-import Header from "../components/Header";
 
 function DetailBuku() {
   const navigate = useNavigate();
