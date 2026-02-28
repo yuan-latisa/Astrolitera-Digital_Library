@@ -1,5 +1,6 @@
 /* GRID MODE */
 .book-card {
+  position: relative;
   width: 150px;
   background: white;
   border-radius: 10px;
@@ -40,18 +41,7 @@
 
 .book-card.list-mode .sinopsis {
   text-align: left;
-  margin-left: -100px;
-}
-
-.bookmark-icon-list {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  opacity: 0.8;
-  cursor: pointer;
-}
-.bookmark-icon-list:hover {
-  opacity: 1;
+  margin: 0;
 }
 
 /* CONTENT AREA */
@@ -135,16 +125,8 @@
 }
 
 .book-card.list-mode .sinopsis {
-  grid-area: sinopsis;
+  text-align: left;
   margin: 0;
-  font-size: 13px;
-  opacity: .85;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  left: -8px;
 }
 
 .book-card.list-mode .book-info {
@@ -202,13 +184,43 @@
 }
 
 .book-card.list-mode .sinopsis {
-  margin: 0;
   text-align: left;
-  font-size: 13px;
-  opacity: 0.85;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
+  margin: 0;
+}
+
+
+
+/* BOOKMARK BUTTON (Grid & List) */
+.bookmark-btn {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #f4c521;           /* kuning */
+  opacity: 0.95;
+  transition: 0.2s ease;
+  z-index: 2;
+}
+
+.bookmark-btn:hover {
+  background: rgba(244, 197, 33, 0.12);
+}
+
+.bookmark-btn.active svg {
+  fill: #f4c521;            /* isi kuning saat disimpan */
+}
+
+.bookmark-btn--list {
+  top: 12px;
+  right: 12px;              /* posisi kanan atas (foto list) */
+}
+
+.bookmark-btn--grid {
+  bottom: 10px;
+  right: 10px;              /* posisi kanan bawah (foto grid) */
 }

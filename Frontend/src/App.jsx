@@ -14,6 +14,7 @@ import KategoriPage from "./pages/KategoriPage";
 import HalamanBaca from "./pages/HalamanBaca";
 import SearchResult from "./pages/SearchResult";
 import Toast from "./components/Toast";
+import { ToastProvider } from "./context/ToastContext";
 import ViewAllPage from "./pages/ViewAllPage";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         />
       )}
 
+      <ToastProvider showToast={showToast}>
       <Routes>
 
         {/* halaman awal */}
@@ -67,7 +69,8 @@ function App() {
 
         <Route path="/view-all" element={<ViewAllPage />} />
 
-      </Routes>
+            </Routes>
+    </ToastProvider>
     </BrowserRouter>
   );
 }
