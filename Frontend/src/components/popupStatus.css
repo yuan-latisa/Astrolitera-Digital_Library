@@ -84,3 +84,7 @@
   color: #6b7280;
   text-decoration: underline;
 }
+
+
+.popup-card{position:relative;}
+.popup-close{position:absolute;top:14px;right:14px;background:transparent;border:none;cursor:pointer;}

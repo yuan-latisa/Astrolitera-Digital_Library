@@ -5,8 +5,11 @@ import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import bookImg from "../assets/book.png";
 import { useNavigate } from "react-router-dom";
 
-function Login({showToast}) {
+import { useToast } from "../components/Toast";
+
+function Login() {
   const navigate = useNavigate();
+  const showToast = useToast();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
@@ -49,8 +52,8 @@ function Login({showToast}) {
     if(found){
     showToast?.("success", "Berhasil Masuk!");
     try { localStorage.setItem("sessionUser", JSON.stringify(found)); } catch (e) {}
-    navigate("/home");
-    }
+    setTimeout(() => navigate("/home"), 200);
+}
   }
 
   return (

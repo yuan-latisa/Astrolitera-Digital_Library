@@ -3,8 +3,10 @@ import "./DetailBuku.css";
 import { ArrowLeft, Star, Bookmark, BookOpen, Info, MessageSquare, ThumbsUp, Trash2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { books } from "../data/Books";
+import { useToast } from "../components/Toast";
 
 function DetailBuku() {
+  const showToast = useToast();
   const navigate = useNavigate();
   const { id } = useParams();
   const book =
@@ -117,27 +119,17 @@ function DetailBuku() {
 
   //BOOKMARK STATE + NOTIFIKASI
   const [bookmarked, setBookmarked] = useState(false);
-  const [toast, setToast] = useState(null);
-
-  const showToast = (msg) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), 1700); // notif hilang otomatis
-  };
 
   const toggleBookmark = () => {
     const newState = !bookmarked;
     setBookmarked(newState);
 
-    showToast(
-      newState
-        ? "Ditambahkan ke Bookmark"
-        : "Dihapus dari Bookmark"
-    );
-  };
+    showToast?.(newState ? "success" : "info", newState ? "Ditambahkan ke Bookmark" : "Dihapus dari Bookmark");
+};
 
   return (
     <div className="detail-container">
-      {toast && <div className="toast-notif">{toast}</div>}
+      
       <ArrowLeft className="back-btn" onClick={() => navigate(-1)} />
 
       {/* BAGIAN ATAS */}

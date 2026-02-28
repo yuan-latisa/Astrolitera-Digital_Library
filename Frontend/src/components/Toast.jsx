@@ -1,17 +1,31 @@
-import {
-  X,
-  CheckCircle,
-  XCircle,
-  Info,
-  AlertTriangle
-} from "lucide-react";
+import React, { createContext, useContext } from "react";
+import { X, CheckCircle, XCircle, Info, AlertTriangle } from "lucide-react";
 import "./Toast.css";
+
+/**
+ * ToastProvider + useToast:
+ * - Exposes App-level showToast(type, message) without prop drilling.
+ * - Keep UI component (default export) in the same file to avoid many toast files.
+ */
+const ToastContext = createContext(null);
+
+export function ToastProvider({ showToast, children }) {
+  return (
+    <ToastContext.Provider value={showToast}>
+      {children}
+    </ToastContext.Provider>
+  );
+}
+
+export function useToast() {
+  return useContext(ToastContext);
+}
 
 export default function Toast({
   type = "info",
   message,
   onClose,
-  loading = false
+  loading = false,
 }) {
   const Icon =
     type === "success"

@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./PopupStatus.css";
 import img1 from "../assets/success.png";
 import img2 from "../assets/pending.png";
 import img3 from "../assets/error.png";
+import { X } from "lucide-react";
 
-const PopupStatus = ({ type }) => {
+const PopupStatus = ({ type, onClose }) => {
+  const navigate = useNavigate();
+
   const data = {
     success: {
       title: "PENDAFTARAN BERHASIL!",
@@ -31,29 +34,52 @@ const PopupStatus = ({ type }) => {
       link: "/register",
     },
   };
-  
+
   const c = data[type];
   if (!c) return null;
 
+  const handleClose = () => {
+    // default behaviour: go home as guest
+    if (typeof onClose === "function") return onClose();
+    navigate("/home");
+  };
+
   return (
-    <div className="popup-overlay">
+    <div className="popup-overlay" role="dialog" aria-modal="true">
       <div className="popup-card">
+        {(type === "pending" || type === "success") && (
+          <button
+            type="button"
+            className="popup-close"
+            onClick={handleClose}
+            aria-label="Tutup"
+          >
+            <X size={18} />
+          </button>
+        )}
+
         <img src={c.img} alt={type} className="popup-img" />
 
-        <h3 className={`popup-title ${c.color}`}>
-          {c.title}
-        </h3>
+        <h3 className={`popup-title ${c.color}`}>{c.title}</h3>
 
-        <p className="popup-desc">
-          {c.desc}
-        </p>
+        <p className="popup-desc">{c.desc}</p>
 
-        <Link to={c.link} className={`popup-btn ${c.color}`}>
+        <Link
+          to={c.link}
+          className={`popup-btn ${c.color}`}
+          onClick={() => {
+            if (type === "pending" && typeof onClose === "function") onClose();
+          }}
+        >
           {c.btn}
         </Link>
 
         {type === "error" && (
-          <Link to={{ pathname: "/home" }} state={{ guest: true }} className="popup-guest">
+          <Link
+            to={{ pathname: "/home" }}
+            state={{ guest: true }}
+            className="popup-guest"
+          >
             lanjut sebagai tamu
           </Link>
         )}

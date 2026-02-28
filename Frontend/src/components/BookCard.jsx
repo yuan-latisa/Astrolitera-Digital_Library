@@ -2,7 +2,7 @@ import React from "react";
 import "./BookCard.css";
 import { Star, Bookmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "../context/ToastContext";
+import { useToast } from "./Toast";
 import { useEffect, useState } from "react";
 
 function BookCard({

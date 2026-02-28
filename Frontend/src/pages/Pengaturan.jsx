@@ -4,8 +4,10 @@ import Header from "../components/Header";
 import SideMenu from "../components/SideMenu";
 import defaultAvatar from "../assets/default-avatar.jpg";
 import { BadgeCheck, Camera } from "lucide-react";
+import { useToast } from "../components/Toast";
 
 export default function Pengaturan() {
+  const showToast = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Ambil session user (kalau belum login, nanti kamu bisa bikin versi guest)
@@ -86,7 +88,7 @@ export default function Pengaturan() {
       // ignore
     }
 
-    alert("Perubahan disimpan");
+    showToast?.("success", "Perubahan disimpan");
   };
 
   // Kalau sessionUser null, untuk sekarang tetep render UI (biar kamu desain dulu)
