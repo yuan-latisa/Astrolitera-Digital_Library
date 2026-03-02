@@ -4,6 +4,7 @@ import { ArrowLeft, Star, Bookmark, BookOpen, Info, MessageSquare, ThumbsUp, Tra
 import { useNavigate, useParams } from "react-router-dom";
 import { books } from "../data/Books";
 import { useToast } from "../components/Toast";
+import RequestAccessPopup from "../components/RequestAccessPopup";
 
 function DetailBuku() {
   const showToast = useToast();
@@ -13,6 +14,69 @@ function DetailBuku() {
     books.find((b) => b.id === Number(id)) || books[0];
 
   const [tab, setTab] = useState("sinopsis");
+
+  // REQUEST AKSES (AKTIVITAS)
+  const ACCESS_KEY = "bookAccessRequests";
+
+  const readAccessRequests = () => {
+    try {
+      const raw = localStorage.getItem(ACCESS_KEY);
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const writeAccessRequests = (list) => {
+    localStorage.setItem(ACCESS_KEY, JSON.stringify(list));
+    window.dispatchEvent(new Event("bookAccessRequests:changed"));
+  };
+
+  const [requestOpen, setRequestOpen] = useState(false);
+
+  const submitAccessRequest = () => {
+    const nowIso = new Date().toISOString();
+    const list = readAccessRequests();
+    const idx = list.findIndex((x) => Number(x.bookId) === Number(book.id));
+
+    if (idx >= 0) {
+      const curr = list[idx] || {};
+      if (curr.status === "menunggu") {
+        showToast?.(
+          "info",
+          "Kamu sudah mengajukan akses untuk buku ini. Silakan cek statusnya di menu Aktivitas."
+        );
+        setRequestOpen(false);
+        return;
+      }
+      if (curr.status === "disetujui") {
+        showToast?.("success", "Akses buku ini sudah disetujui. Silakan baca dari menu Aktivitas.");
+        setRequestOpen(false);
+        return;
+      }
+      // ditolak -> boleh request ulang
+      list[idx] = { ...curr, status: "menunggu", requestedAt: nowIso };
+      writeAccessRequests(list);
+      showToast?.(
+        "success",
+        "Permintaan akses berhasil diajukan ulang. Silakan cek statusnya di menu Aktivitas."
+      );
+      setRequestOpen(false);
+      return;
+    }
+
+    // request baru
+    list.unshift({ bookId: Number(book.id), status: "menunggu", requestedAt: nowIso });
+    writeAccessRequests(list);
+
+    showToast?.(
+      "success",
+      "Permintaan akses berhasil diajukan. Silakan cek statusnya di menu Aktivitas."
+    );
+    setRequestOpen(false);
+  };
+
 
   //LOCAL STORAGE MANAGEMENT
   const storageKey = "ulasan-" + book.title.replace(/\s+/g, "-").toLowerCase();
@@ -314,11 +378,19 @@ function DetailBuku() {
 
         {/* BACA SEKARANG */}
         {tab !== "ulasan" && (
-          <button className="read-btn" onClick={() => navigate(`/baca/${book.id}`)}>
+          <button className="read-btn" onClick={() => setRequestOpen(true)}>
             Baca Sekarang
           </button>
         )}
       </div>
+
+      <RequestAccessPopup
+        open={requestOpen}
+        title="Ajukan Akses Buku"
+        onClose={() => setRequestOpen(false)}
+        onSubmit={submitAccessRequest}
+      />
+
     </div>
   );
 }
