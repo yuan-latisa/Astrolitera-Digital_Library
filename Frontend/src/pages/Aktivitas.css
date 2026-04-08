@@ -137,3 +137,26 @@
   color: #6b7280;
   text-align:center;
 }
+
+.activity-search {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.activity-search input {
+  width: 100%;
+  max-width: 420px;
+  height: 38px;
+  border: 1px solid #d8dce6;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 13px;
+  outline: none;
+  background: #fbfbfd;
+}
+
+.activity-search input:focus {
+  border-color: #e0bc2d;
+}

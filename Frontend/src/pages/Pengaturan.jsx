@@ -3,12 +3,13 @@ import "./Pengaturan.css";
 import Header from "../components/Header";
 import SideMenu from "../components/SideMenu";
 import defaultAvatar from "../assets/default-avatar.jpg";
-import { BadgeCheck, Camera } from "lucide-react";
+import { BadgeCheck, Camera, Eye, EyeOff } from "lucide-react";
 import { useToast } from "../components/Toast";
 
 export default function Pengaturan() {
   const showToast = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Ambil session user (kalau belum login, nanti kamu bisa bikin versi guest)
   const sessionUser = useMemo(() => {
@@ -179,24 +180,26 @@ export default function Pengaturan() {
 
                 <Field
                   label="Tanggal Lahir"
+                  type="date"
                   value={form.tanggalLahir}
                   placeholder="Masukkan tanggal lahir (YYYY-MM-DD)"
                   onChange={(v) => updateField("tanggalLahir", v)}
                 />
 
-                <Field
+                <RadioField
                   label="Jenis Kelamin"
                   value={form.jenisKelamin}
-                  placeholder="Contoh: Perempuan/Laki-laki"
+                  options={["Laki-laki", "Perempuan"]}
                   onChange={(v) => updateField("jenisKelamin", v)}
                 />
 
-                <Field
+                <PasswordField
                   label="Kata Sandi"
-                  type="password"
                   value={form.password}
-                  placeholder="masukkan kata sandi"
+                  placeholder="Masukkan kata sandi"
                   onChange={(v) => updateField("password", v)}
+                  showPassword={showPassword}
+                  onToggle={() => setShowPassword((view) => !view)}
                 />
 
                 <button className="settings-save" onClick={handleSave}>
@@ -222,6 +225,67 @@ function Field({ label, value, placeholder, onChange, type = "text" }) {
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
+    </div>
+  );
+}
+
+function PasswordField({
+  label,
+  value,
+  placeholder,
+  onChange,
+  showPassword,
+  onToggle,
+}) {
+  return (
+    <div className="settings-field">
+      <label>{label}</label>
+
+      <div className="settings-password-wrap">
+        <input
+          type={showPassword ? "text" : "password"}
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+        />
+
+        <button
+          type="button"
+          className="settings-password-toggle"
+          onClick={onToggle}
+          aria-label={showPassword ? "Sembunyikan kata sandi" : "Lihat kata sandi"}
+        >
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function RadioField({
+  label,
+  value,
+  options = [],
+  onChange,
+}) {
+  return (
+    <div className="settings-field">
+      <label>{label}</label>
+
+      <div className="settings-radio-group">
+        {options.map((opt) => (
+          <label key={opt} className="settings-radio">
+            <input
+              type="radio"
+              name={label}
+              value={opt}
+              checked={value === opt}
+              onChange={(e) => onChange(e.target.value)}
+            />
+            <span>{opt}</span>
+          </label>
+        ))}
+      </div>
     </div>
   );
 }

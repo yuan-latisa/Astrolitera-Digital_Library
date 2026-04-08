@@ -102,14 +102,14 @@ export default function Aktivitas() {
   return (
     <div className="aktivitas-page">
       <Header
-        showSearch={true}
+        showSearch={false}
         showMenu={true}
         showBack={false}
         onMenuClick={() => setMenuOpen(true)}
         searchValue={searchText}
         onSearchChange={setSearchText}
         searchPlaceholder="Cari Buku"
-        onSearchSubmit={() => {}}
+        onSearchSubmit={() => { }}
       />
       <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
@@ -121,6 +121,15 @@ export default function Aktivitas() {
           <button className={tab === "menunggu" ? "active" : ""} onClick={() => setTab("menunggu")}>Menunggu</button>
           <button className={tab === "disetujui" ? "active" : ""} onClick={() => setTab("disetujui")}>Disetujui</button>
           <button className={tab === "ditolak" ? "active" : ""} onClick={() => setTab("ditolak")}>Ditolak</button>
+        </div>
+
+        <div className="activity-search">
+          <input
+            type="text"
+            placeholder="Cari aktivitas..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
         </div>
 
         <div className="aktivitas-list">

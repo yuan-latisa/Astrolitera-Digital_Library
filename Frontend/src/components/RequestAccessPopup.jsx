@@ -9,7 +9,7 @@ export default function RequestAccessPopup({ open, title, onClose, onSubmit }) {
     <div className="ra-overlay" role="dialog" aria-modal="true">
       <div className="ra-card">
         <div className="ra-header">
-          <h3 className="ra-title">{title || "Ajukan Akses Buku"}</h3>
+          <h3 className="ra-title">{title || "Ajukan Permintaan Baca"}</h3>
           <button
             type="button"
             className="ra-close"
@@ -21,9 +21,7 @@ export default function RequestAccessPopup({ open, title, onClose, onSubmit }) {
         </div>
 
         <div className="ra-body">
-          <p>Anda akan mengajukan permintaan untuk membaca buku ini.</p>
-          <p>Permintaan akan diproses oleh admin.</p>
-          <p className="ra-muted">Proses persetujuan biasanya memerlukan waktu.</p>
+          <p className="ra-muted">Kamu perlu mengajukan izin ke admin untuk membaca buku ini. Permintaan akan diproses sebelum kamu bisa mulai membaca.</p>
         </div>
 
         <div className="ra-footer">
